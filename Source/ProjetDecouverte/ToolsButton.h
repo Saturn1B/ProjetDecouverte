@@ -6,6 +6,7 @@
 #include "Components/Button.h"
 #include "AutomaticTools.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/TextBlock.h"
 #include "ToolsButton.generated.h"
 
 /**
@@ -15,12 +16,22 @@ UCLASS()
 class PROJETDECOUVERTE_API UToolsButton : public UButton
 {
 	GENERATED_BODY()
-	
+
 public:
 
 	UFUNCTION(BlueprintCallable)
-		void BuyTool();
+		void ButtonInteract();
+
+	UFUNCTION(BlueprintCallable)
+		void BuyTool(AAutomaticTools* tool);
+
+	UFUNCTION(BlueprintCallable)
+		void UpgradeTool(AAutomaticTools* tool);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int index;
+		int index = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class UTextBlock* ButtonTextState;
+
 };

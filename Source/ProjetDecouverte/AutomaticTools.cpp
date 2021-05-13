@@ -2,6 +2,7 @@
 
 
 #include "AutomaticTools.h"
+#define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
 AAutomaticTools::AAutomaticTools()
@@ -24,8 +25,15 @@ void AAutomaticTools::BeginPlay()
 	isActive = false;
 
 	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyPlayerController::StaticClass(), FoundActors);
-	currentLayer = Cast<AMyPlayerController>(FoundActors[0])->currentLayer;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlanetLayers::StaticClass(), FoundActors);
+	for (AActor* layerActor : FoundActors)
+	{
+		APlanetLayers* layer = Cast<APlanetLayers>(layerActor);
+		if (layer->isTopLayer)
+		{
+			currentLayer = layer;
+		}
+	}
 }
 
 // Called every frame
@@ -35,10 +43,29 @@ void AAutomaticTools::Tick(float DeltaTime)
 
 }
 
+void AAutomaticTools::Buy()
+{
+	isActive = true;
+	Mine();
+	//TO DO retirer le montant de minéraux défini
+}
+
 void AAutomaticTools::Upgrade()
 {
 	currentCost = baseCost * FMath::Pow(costCoeff, upgradeIndex);
 	currentProd = (baseProd * upgradeIndex) * prodCoeff;
 	currentDamage = (baseDamage * upgradeIndex) * damageCoeff;
+	//TO DO retirer le montant de minéraux défini
+}
+
+void AAutomaticTools::Mine()
+{
+	if (currentLayer != NULL)
+	{
+		currentLayer->LooseHP(currentDamage);
+
+		FTimerHandle handle;
+		GetWorldTimerManager().SetTimer(handle, this, &AAutomaticTools::Mine, baseTime, false);
+	}
 }
 

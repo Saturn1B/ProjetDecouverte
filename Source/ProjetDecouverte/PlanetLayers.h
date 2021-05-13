@@ -49,4 +49,7 @@ public:
 
 	UPROPERTY(editanywhere)
 		class APlanetLayers* NextLayer;
+
+	UPROPERTY(editanywhere)
+		bool isTopLayer = false;
 };

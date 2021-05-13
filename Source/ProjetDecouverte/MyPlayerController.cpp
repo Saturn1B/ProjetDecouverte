@@ -45,7 +45,14 @@ void AMyPlayerController::BeginPlay()
 
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlanetLayers::StaticClass(), FoundActors);
-	currentLayer = Cast<APlanetLayers>(FoundActors[0]);
+	for (AActor* layerActor : FoundActors)
+	{
+		APlanetLayers* layer = Cast<APlanetLayers>(layerActor);
+		if (layer->isTopLayer)
+		{
+			currentLayer = layer;
+		}
+	}
 }
 
 // Called every frame

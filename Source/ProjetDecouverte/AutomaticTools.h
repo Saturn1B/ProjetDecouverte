@@ -65,7 +65,11 @@ public:
 
 	float upgradeIndex;
 
+	void Buy();
+
 	void Upgrade();
+
+	void Mine();
 
 	UPROPERTY(editanywhere)
 		class APlanetLayers* currentLayer;

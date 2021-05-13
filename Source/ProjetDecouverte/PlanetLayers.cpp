@@ -50,6 +50,7 @@ void APlanetLayers::LooseHP(int damageValue)
 	{
 		if (NextLayer != NULL)
 		{
+			NextLayer->isTopLayer = true;
 			TArray<AActor*> FoundActors1;
 			UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAutomaticTools::StaticClass(), FoundActors1);
 			for (AActor* tool : FoundActors1)
@@ -59,6 +60,18 @@ void APlanetLayers::LooseHP(int damageValue)
 			TArray<AActor*> FoundActors2;
 			UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyPlayerController::StaticClass(), FoundActors2);
 			Cast<AMyPlayerController>(FoundActors2[0])->currentLayer = NextLayer;
+		}
+		else 
+		{
+			TArray<AActor*> FoundActors1;
+			UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAutomaticTools::StaticClass(), FoundActors1);
+			for (AActor* tool : FoundActors1)
+			{
+				Cast<AAutomaticTools>(tool)->currentLayer = NULL;
+			}
+			TArray<AActor*> FoundActors2;
+			UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyPlayerController::StaticClass(), FoundActors2);
+			Cast<AMyPlayerController>(FoundActors2[0])->currentLayer = NULL;
 		}
 
 		Destroy();
