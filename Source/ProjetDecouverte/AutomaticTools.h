@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "PlanetLayers.h"
 #include "MyPlayerController.h"
+#include "Materials.h"
 #include "Kismet/GameplayStatics.h"
 #include "AutomaticTools.generated.h"
 
@@ -30,7 +31,7 @@ public:
 
 	UPROPERTY(editanywhere)
 		TArray<float> baseCost;
-
+	UPROPERTY(editanywhere)
 	TArray<float> currentCost;
 
 	UPROPERTY(editanywhere)
@@ -39,9 +40,9 @@ public:
 	//Prod
 
 	UPROPERTY(editanywhere)
-		float baseProd;
+		TArray<float> baseProd;
 
-	float currentProd;
+	TArray<float> currentProd;
 
 	UPROPERTY(editanywhere)
 		float prodCoeff;
@@ -79,4 +80,7 @@ public:
 
 	UPROPERTY(editanywhere)
 		int Index;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AMaterials* materials;
 };

@@ -34,6 +34,10 @@ void AAutomaticTools::BeginPlay()
 			currentLayer = layer;
 		}
 	}
+
+	TArray<AActor*> FoundMaterials;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMaterials::StaticClass(), FoundMaterials);
+	materials = Cast<AMaterials>(FoundMaterials[0]);
 }
 
 // Called every frame
@@ -45,13 +49,11 @@ void AAutomaticTools::Tick(float DeltaTime)
 
 void AAutomaticTools::Buy()
 {
-	isActive = true;
-	Mine();
-	//TO DO retirer le montant de minéraux défini
-}
+	for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		materials->UpdateMaterial(i, -currentCost[i]);
+	}
 
-void AAutomaticTools::Upgrade()
-{
 	upgradeIndex += 1;
 
 	for (size_t i = 0; i < currentCost.Num(); i++)
@@ -59,8 +61,29 @@ void AAutomaticTools::Upgrade()
 		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
 	}
 
-	currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
-	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);;
+	isActive = true;
+	Mine();
+	//TO DO retirer le montant de minéraux défini
+}
+
+void AAutomaticTools::Upgrade()
+{
+	for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		materials->UpdateMaterial(i, -currentCost[i]);
+	}
+
+	upgradeIndex += 1;
+
+	for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
+	}
+	for (size_t i = 0; i < currentProd.Num(); i++)
+	{
+		currentProd[i] = FMath::RoundHalfToEven((baseProd[i] * upgradeIndex) * prodCoeff);
+	}
+	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);
 	//TO DO retirer le montant de minéraux défini
 }
 
@@ -70,6 +93,10 @@ void AAutomaticTools::Mine()
 	{
 		currentLayer->LooseHP(currentDamage);
 
+		for (size_t i = 0; i < currentProd.Num(); i++)
+		{
+			materials->UpdateMaterial(i, currentProd[i]);
+		}
 		FTimerHandle handle;
 		GetWorldTimerManager().SetTimer(handle, this, &AAutomaticTools::Mine, baseTime, false);
 	}

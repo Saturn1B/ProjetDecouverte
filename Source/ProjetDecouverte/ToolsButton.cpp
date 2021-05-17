@@ -6,8 +6,6 @@
 
 void UToolsButton::ButtonInteract()
 {
-	LOG(materials->GetName());
-
 	if (tool != NULL) 
 	{
 		if (!tool->isActive)

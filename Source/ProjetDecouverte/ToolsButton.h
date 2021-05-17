@@ -38,7 +38,4 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class AAutomaticTools* tool;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class AMaterials* materials;
-
 };

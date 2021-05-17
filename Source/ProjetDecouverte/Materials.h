@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Components/WidgetComponent.h"
 #include "Components/TextBlock.h"
+#include "ToolsShop.h"
 #include "Materials.generated.h"
 
 UCLASS()
@@ -36,5 +37,10 @@ public:
 
 	UPROPERTY(editanywhere)
 		UUserWidget* created_ui;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AToolsShop* toolsShop;
+
+	void UpdateMaterial(int index, int value);
 
 };

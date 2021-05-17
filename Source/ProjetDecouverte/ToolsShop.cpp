@@ -20,9 +20,6 @@ void AToolsShop::BeginPlay()
 	created_ui->AddToViewport();
 	toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_1"))));
 
-	TArray<AActor*> FoundMaterials;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMaterials::StaticClass(), FoundMaterials);
-
 	for (UToolsButton* button : toolsButton)
 	{
 		TArray<AActor*> FoundActors;
@@ -33,7 +30,6 @@ void AToolsShop::BeginPlay()
 			if (tool->Index == button->index)
 			{
 				button->tool = tool;
-				button->materials = Cast<AMaterials>(FoundMaterials[0]);
 			}
 		}
 	}
