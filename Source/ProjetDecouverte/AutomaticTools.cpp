@@ -52,9 +52,15 @@ void AAutomaticTools::Buy()
 
 void AAutomaticTools::Upgrade()
 {
-	currentCost = baseCost * FMath::Pow(costCoeff, upgradeIndex);
-	currentProd = (baseProd * upgradeIndex) * prodCoeff;
-	currentDamage = (baseDamage * upgradeIndex) * damageCoeff;
+	upgradeIndex += 1;
+
+	for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
+	}
+
+	currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
+	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);;
 	//TO DO retirer le montant de minéraux défini
 }
 

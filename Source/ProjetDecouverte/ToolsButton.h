@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/Button.h"
 #include "AutomaticTools.h"
+#include "Materials.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/TextBlock.h"
 #include "ToolsButton.generated.h"
@@ -23,15 +24,21 @@ public:
 		void ButtonInteract();
 
 	UFUNCTION(BlueprintCallable)
-		void BuyTool(AAutomaticTools* tool);
+		void BuyTool();
 
 	UFUNCTION(BlueprintCallable)
-		void UpgradeTool(AAutomaticTools* tool);
+		void UpgradeTool();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int index = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class UTextBlock* ButtonTextState;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AAutomaticTools* tool;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AMaterials* materials;
 
 };

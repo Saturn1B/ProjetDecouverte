@@ -29,9 +29,9 @@ public:
 	//Costs
 
 	UPROPERTY(editanywhere)
-		float baseCost;
+		TArray<float> baseCost;
 
-	float currentCost;
+	TArray<float> currentCost;
 
 	UPROPERTY(editanywhere)
 		float costCoeff;

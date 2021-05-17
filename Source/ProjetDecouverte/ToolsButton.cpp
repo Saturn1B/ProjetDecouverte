@@ -6,32 +6,28 @@
 
 void UToolsButton::ButtonInteract()
 {
-	TArray<AActor*> FoundActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAutomaticTools::StaticClass(), FoundActors);
-	for (AActor* actorTool : FoundActors)
+	LOG(materials->GetName());
+
+	if (tool != NULL) 
 	{
-		AAutomaticTools* tool = Cast<AAutomaticTools>(actorTool);
-		if (tool->Index == index)
+		if (!tool->isActive)
 		{
-			if (!tool->isActive)
-			{
-				BuyTool(tool);
-			}
-			else 
-			{
-				UpgradeTool(tool);
-			}
+			BuyTool();
+		}
+		else
+		{
+			UpgradeTool();
 		}
 	}
 }
 
-void UToolsButton::BuyTool(AAutomaticTools* tool)
+void UToolsButton::BuyTool()
 {
 	tool->Buy();
 	ButtonTextState->SetText(FText::FromString("UPGRADE"));
 }
 
-void UToolsButton::UpgradeTool(AAutomaticTools* tool)
+void UToolsButton::UpgradeTool()
 {
 	tool->Upgrade();
 }
