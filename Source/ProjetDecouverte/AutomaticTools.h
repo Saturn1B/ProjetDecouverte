@@ -31,7 +31,7 @@ public:
 
 	UPROPERTY(editanywhere)
 		TArray<float> baseCost;
-	UPROPERTY(editanywhere)
+
 	TArray<float> currentCost;
 
 	UPROPERTY(editanywhere)
@@ -40,9 +40,9 @@ public:
 	//Prod
 
 	UPROPERTY(editanywhere)
-		TArray<float> baseProd;
+		float baseProd;
 
-	TArray<float> currentProd;
+	float currentProd;
 
 	UPROPERTY(editanywhere)
 		float prodCoeff;

@@ -79,10 +79,7 @@ void AAutomaticTools::Upgrade()
 	{
 		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
 	}
-	for (size_t i = 0; i < currentProd.Num(); i++)
-	{
-		currentProd[i] = FMath::RoundHalfToEven((baseProd[i] * upgradeIndex) * prodCoeff);
-	}
+	currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
 	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);
 	//TO DO retirer le montant de minéraux défini
 }
@@ -93,9 +90,9 @@ void AAutomaticTools::Mine()
 	{
 		currentLayer->LooseHP(currentDamage);
 
-		for (size_t i = 0; i < currentProd.Num(); i++)
+		for (size_t i = 0; i < currentLayer->materialsIndex.Num(); i++)
 		{
-			materials->UpdateMaterial(i, currentProd[i]);
+			materials->UpdateMaterial(currentLayer->materialsIndex[i], currentProd);
 		}
 		FTimerHandle handle;
 		GetWorldTimerManager().SetTimer(handle, this, &AAutomaticTools::Mine, baseTime, false);

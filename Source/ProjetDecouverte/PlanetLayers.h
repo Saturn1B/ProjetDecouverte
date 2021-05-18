@@ -52,4 +52,7 @@ public:
 
 	UPROPERTY(editanywhere)
 		bool isTopLayer = false;
+
+	UPROPERTY(editanywhere)
+		TArray<int> materialsIndex;
 };

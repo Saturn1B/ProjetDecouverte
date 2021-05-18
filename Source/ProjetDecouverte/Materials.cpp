@@ -49,7 +49,6 @@ void AMaterials::Tick(float DeltaTime)
 
 void AMaterials::UpdateMaterial(int index, int value)
 {
-	LOG(FString::FromInt(value));
 	materialsCount[index] += value;
 	materialsText[index]->SetText(FText::FromString(FString::FromInt(materialsCount[index])));
 	for (UToolsButton* button : toolsShop->toolsButton)
