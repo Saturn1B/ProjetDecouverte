@@ -7,8 +7,11 @@
 #include "Components/WidgetComponent.h"
 #include "Components/Button.h"
 #include "ToolsButton.h"
+#include "ToolsActivation.h"
+#include "ToolsUse.h"
 #include "AutomaticTools.h"
 #include "Materials.h"
+#include "MyPlayerController2.h"
 #include "ToolsShop.generated.h"
 
 UCLASS()
@@ -32,8 +35,20 @@ public:
 		TArray<class UToolsButton*> toolsButton;
 
 	UPROPERTY(editanywhere)
+		TArray<class UToolsActivation*> toolsActivation;
+
+	UPROPERTY(editanywhere)
 		TSubclassOf<UUserWidget> bp_ui;
 
 	UPROPERTY(editanywhere)
 		UUserWidget* created_ui;
+
+	UPROPERTY(editanywhere)
+		class UButton* mapButton;
+
+	UPROPERTY(editanywhere)
+		class AActor* camera;
+
+	UFUNCTION()
+		void ZoomInOut();
 };

@@ -62,8 +62,7 @@ void AAutomaticTools::Buy()
 	}
 
 	isActive = true;
-	Mine();
-	//TO DO retirer le montant de minéraux défini
+	//Mine();
 }
 
 void AAutomaticTools::Upgrade()
@@ -81,21 +80,65 @@ void AAutomaticTools::Upgrade()
 	}
 	currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
 	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);
-	//TO DO retirer le montant de minéraux défini
 }
 
 void AAutomaticTools::Mine()
 {
-	if (currentLayer != NULL)
+	if (isMining)
 	{
-		currentLayer->LooseHP(currentDamage);
-
-		for (size_t i = 0; i < currentLayer->materialsIndex.Num(); i++)
+		if (currentLayer != NULL)
 		{
-			materials->UpdateMaterial(currentLayer->materialsIndex[i], currentProd);
+			currentLayer->LooseHP(currentDamage);
+
+			for (size_t i = 0; i < currentLayer->materialsIndex.Num(); i++)
+			{
+				materials->UpdateMaterial(currentLayer->materialsIndex[i], currentProd);
+			}
+
+			if (currentLayer->HP > 0)
+			{
+				FTimerHandle handle;
+				GetWorldTimerManager().SetTimer(handle, this, &AAutomaticTools::Mine, baseTime, false);
+			}
+			else
+			{
+				currentLayer = NULL;
+			}
 		}
-		FTimerHandle handle;
-		GetWorldTimerManager().SetTimer(handle, this, &AAutomaticTools::Mine, baseTime, false);
+		else if (currentPiece != NULL)
+		{
+			currentPiece->LooseHP(currentDamage);
+
+			for (size_t i = 0; i < currentPiece->materialsIndex.Num(); i++)
+			{
+				materials->UpdateMaterial(currentPiece->materialsIndex[i], currentProd);
+			}
+
+			if (currentPiece->HP > 0)
+			{
+				FTimerHandle handle;
+				GetWorldTimerManager().SetTimer(handle, this, &AAutomaticTools::Mine, baseTime, false);
+			}
+			else
+			{
+				currentPiece = NULL;
+				EndMining();
+			}
+		}
 	}
+	
+}
+
+void AAutomaticTools::StartMining()
+{
+	isMining = true;
+	Mine();
+	FTimerHandle handle;
+	GetWorldTimerManager().SetTimer(handle, this, &AAutomaticTools::EndMining, stayTime, false);
+}
+
+void AAutomaticTools::EndMining()
+{
+	isMining = false;
 }
 

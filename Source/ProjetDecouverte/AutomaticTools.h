@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "PlanetLayers.h"
+#include "LayerPiece.h"
 #include "MyPlayerController.h"
 #include "Materials.h"
 #include "Kismet/GameplayStatics.h"
@@ -52,6 +53,9 @@ public:
 	UPROPERTY(editanywhere)
 		float baseTime;
 
+	UPROPERTY(editanywhere)
+		float stayTime;
+
 	//Damage
 
 	UPROPERTY(editanywhere)
@@ -72,11 +76,21 @@ public:
 
 	void Mine();
 
+	void StartMining();
+
+	void EndMining();
+
 	UPROPERTY(editanywhere)
 		class APlanetLayers* currentLayer;
 
 	UPROPERTY(editanywhere)
+		class ALayerPiece* currentPiece;
+
+	UPROPERTY(editanywhere)
 		bool isActive;
+
+	UPROPERTY(editanywhere)
+		bool isMining;
 
 	UPROPERTY(editanywhere)
 		int Index;

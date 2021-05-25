@@ -24,7 +24,7 @@ void AMaterials::BeginPlay()
 	created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
 	created_ui->AddToViewport();
 	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("Mat1"))));
-	materialsCount.Add(2);
+	materialsCount.Add(0);
 	materialsText[0]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
 
 	for (UToolsButton* button : toolsShop->toolsButton)
@@ -32,6 +32,8 @@ void AMaterials::BeginPlay()
 		button->SetIsEnabled(true);
 		for (size_t i = 0; i < materialsCount.Num(); i++)
 		{
+			LOG(FString::FromInt(button->tool->baseCost[i]));
+			LOG(FString::FromInt(materialsCount[i]));
 			if (button->tool->baseCost[i] > materialsCount[i])
 			{
 				button->SetIsEnabled(false);

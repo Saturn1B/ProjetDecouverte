@@ -6,6 +6,8 @@
 #include "Components/Button.h"
 #include "AutomaticTools.h"
 #include "Materials.h"
+#include "ToolsShop.h"
+#include "ToolsActivation.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/TextBlock.h"
 #include "ToolsButton.generated.h"
