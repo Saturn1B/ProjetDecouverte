@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "PlanetLayers.h"
 #include "LayerPiece.h"
 #include "Planet.h"
 #include "SolarSystem.h"
-#include "AutomaticTools.h"
+#include "Tools.h"
 #include "Materials.h"
+#include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyPlayerController2.generated.h"
 
@@ -36,17 +36,29 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		class APlayerController* MyController;
 
-	void OnMouseClick();
-
 	void OnFingerTouch(const ETouchIndex::Type FingerIndex, const FVector Location);
 
 	void OnFingerRelease(const ETouchIndex::Type FingerIndex, const FVector Location);
+
+	void OnFingerPinch(float AxisValue);
+
+	void HoldDamage(class ALayerPiece* layerPiece);
+
+	float pinchDelta;
+	float currentPinch;
+	float previousPinch;
 
 	/*UPROPERTY(editanywhere)
 		UStaticMeshComponent* Visible;*/
 
 	UPROPERTY(editanywhere)
+		class ATools* currentTool;
+
+	UPROPERTY(editanywhere)
 		class AActor* ObjectSelected;
+
+	UPROPERTY(editanywhere)
+		class AActor* Camera;
 
 	UPROPERTY(editanywhere)
 		int PlanetSelected;
@@ -56,6 +68,9 @@ public:
 
 	UPROPERTY(editanywhere)
 		bool onDrag;
+
+	UPROPERTY(editanywhere)
+		bool clickHold;
 
 	UPROPERTY(editanywhere)
 		bool zoomedOut;

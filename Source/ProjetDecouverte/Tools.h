@@ -4,20 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/WidgetComponent.h"
-#include "Components/Button.h"
-#include "Materials.h"
-#include "MyPlayerController2.h"
-#include "ToolsShop.generated.h"
+#include "Tools.generated.h"
 
 UCLASS()
-class PROJETDECOUVERTE_API AToolsShop : public AActor
+class PROJETDECOUVERTE_API ATools : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AToolsShop();
+	ATools();
 
 protected:
 	// Called when the game starts or when spawned
@@ -27,18 +23,44 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(editanywhere)
-		TSubclassOf<UUserWidget> bp_ui;
+	//Costs
 
 	UPROPERTY(editanywhere)
-		UUserWidget* created_ui;
+		TArray<float> baseCost;
+
+	TArray<float> currentCost;
 
 	UPROPERTY(editanywhere)
-		class UButton* mapButton;
+		float costCoeff;
+
+	//Damage
 
 	UPROPERTY(editanywhere)
-		class AActor* camera;
+		float baseDamage;
 
-	UFUNCTION()
-		void ZoomInOut();
+	float currentDamage;
+
+	UPROPERTY(editanywhere)
+		float damageCoeff;
+
+	//Bool
+
+	bool onHold;
+
+	bool onLiquid;
+
+	//Timer
+	
+	UPROPERTY(editanywhere)
+		float holdTimer;
+
+	//Stats
+
+	UPROPERTY(editanywhere)
+		int index;
+
+	float upgradeIndex;
+
+	UPROPERTY(editanywhere)
+		bool isActive;
 };

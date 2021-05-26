@@ -27,7 +27,7 @@ void AMaterials::BeginPlay()
 	materialsCount.Add(0);
 	materialsText[0]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
 
-	for (UToolsButton* button : toolsShop->toolsButton)
+	/*for (UToolsButton* button : toolsShop->toolsButton)
 	{
 		button->SetIsEnabled(true);
 		for (size_t i = 0; i < materialsCount.Num(); i++)
@@ -39,7 +39,7 @@ void AMaterials::BeginPlay()
 				button->SetIsEnabled(false);
 			}
 		}
-	}
+	}*/
 }
 
 // Called every frame
@@ -53,7 +53,7 @@ void AMaterials::UpdateMaterial(int index, int value)
 {
 	materialsCount[index] += value;
 	materialsText[index]->SetText(FText::FromString(FString::FromInt(materialsCount[index])));
-	for (UToolsButton* button : toolsShop->toolsButton)
+	/*for (UToolsButton* button : toolsShop->toolsButton)
 	{
 		button->SetIsEnabled(true);
 		for (size_t i = 0; i < materialsCount.Num(); i++)
@@ -63,6 +63,6 @@ void AMaterials::UpdateMaterial(int index, int value)
 				button->SetIsEnabled(false);
 			}
 		}
-	}
+	}*/
 }
 

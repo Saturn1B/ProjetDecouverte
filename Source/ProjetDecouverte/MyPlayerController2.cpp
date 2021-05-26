@@ -48,8 +48,42 @@ void AMyPlayerController2::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMaterials::StaticClass(), FoundMaterials);
 	materials = Cast<AMaterials>(FoundMaterials[0]);
 
+	TArray<AActor*> FoundCameras;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("Camera")), FoundCameras);
+	Camera = FoundCameras[0];
+
+	//TArray<AActor*> FoundPlanets;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlanet::StaticClass(), Planets);
+	bool sorted = false;
+	AActor* temp;
+	while (!sorted)
+	{
+		sorted = true;
+		for (size_t i = 0; i < Planets.Num() - 1; i++)
+		{
+			if (Cast<APlanet>(Planets[i])->Index > Cast<APlanet>(Planets[i + 1])->Index)
+			{
+				temp = Planets[i];
+				Planets[i] = Planets[i + 1];
+				Planets[i + 1] = temp;
+				sorted = false;
+			}
+		}
+	}
+
 	PlanetSelected = 0;
+
+	TArray<AActor*> FoundTools;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATools::StaticClass(), FoundTools);
+	for(AActor* actorTool : FoundTools)
+	{
+		if(Cast<ATools>(actorTool)->index == 0)
+		{
+			currentTool = Cast<ATools>(actorTool);
+		}
+	}
+	currentTool->isActive = true;
+	currentTool->upgradeIndex += 1;
 }
 
 // Called every frame
@@ -68,6 +102,11 @@ void AMyPlayerController2::Tick(float DeltaTime)
 		deltaTouch = currentTouch - previousTouch;
 
 		previousTouch = currentTouch;
+	}
+
+	if(deltaTouch.X >= 2 || deltaTouch.Y >= 2)
+	{
+		clickHold = false;
 	}
 
 	MouseRotation = FRotator(deltaTouch.Y, deltaTouch.X, 0) * 0.1;
@@ -129,33 +168,13 @@ void AMyPlayerController2::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
-	InputComponent->BindAction("LeftClick", IE_Pressed, this, &AMyPlayerController2::OnMouseClick);
-
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AMyPlayerController2::OnFingerTouch);
 
 	InputComponent->BindTouch(EInputEvent::IE_Released, this, &AMyPlayerController2::OnFingerRelease);
 
+	InputComponent->BindAxis("UnZoom", this, &AMyPlayerController2::OnFingerPinch);
+
 	//InputComponent->BindGesture(EGestureEvent::, this, &AMyPlayerController2::OnFingerRelease);
-}
-
-void AMyPlayerController2::OnMouseClick()
-{
-	FHitResult HitResult;
-	MyController->GetHitResultUnderCursor(ECollisionChannel::ECC_Pawn, false, HitResult);
-
-	if (HitResult.GetComponent())
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("Mouse Click+++ Component: %s"), *HitResult.GetComponent()->GetName()));
-	}
-
-	if (HitResult.GetActor())
-	{
-		//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("Mouse Click+++ Actor: %s"), *HitResult.GetActor()->GetName()));
-		if (HitResult.GetActor()->GetClass()->IsChildOf(ALayerPiece::StaticClass()))
-		{
-			Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(1);
-		}
-	}
 }
 
 void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, const FVector Location)
@@ -170,28 +189,30 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 
 		if (HitResult.GetActor())
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Red, FString::Printf(TEXT("Mouse Click+++ Actor: %s"), *HitResult.GetActor()->GetName()));
 			if (HitResult.GetActor()->GetClass()->IsChildOf(ALayerPiece::StaticClass()))
 			{
-				if (Cast<ALayerPiece>(HitResult.GetActor())->HP > 0)
+				if (Cast<ALayerPiece>(HitResult.GetActor())->HP > 0 && !Cast<ALayerPiece>(HitResult.GetActor())->indestructible && !Cast<ALayerPiece>(HitResult.GetActor())->lava)
 				{
-					Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(1);
+					if(!currentTool->onHold)
+					{
+						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == false && currentTool->onLiquid == false)
+						{
+							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage);
+						}
+					}
+					else
+					{
+						if (Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
+						{
+							clickHold = true;
+							HoldDamage(Cast<ALayerPiece>(HitResult.GetActor()));
+						}
+					}
 
-					for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
+					/*for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
 					{
 						materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex[i], 1);
-					}
-
-					TArray<AActor*> FoundActors2;
-					UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAutomaticTools::StaticClass(), FoundActors2);
-					for (AActor* toolActor : FoundActors2)
-					{
-						Cast<AAutomaticTools>(toolActor)->currentPiece = Cast<ALayerPiece>(HitResult.GetActor());
-						/*if (Cast<AAutomaticTools>(toolActor)->isActive)
-						{
-							Cast<AAutomaticTools>(toolActor)->Mine();
-						}*/
-					}
+					}*/
 				}
 				ObjectSelected = Planets[PlanetSelected];
 			}
@@ -209,8 +230,46 @@ void AMyPlayerController2::OnFingerRelease(const ETouchIndex::Type FingerIndex, 
 {
 	ObjectSelected = NULL;
 	onDrag = false;
+	clickHold = false;
 	currentTouch = FVector2D(0, 0);
 	previousTouch = FVector2D(0, 0);
 	MouseRotation = FRotator(0, 0, 0);
+}
+
+void AMyPlayerController2::OnFingerPinch(float AxisValue)
+{
+	previousPinch = currentPinch;
+	currentPinch = AxisValue;
+	pinchDelta = currentPinch - previousPinch;
+	if(pinchDelta > 1)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("ZoomPinch %f"), pinchDelta));
+		if (zoomedOut)
+		{
+			Camera->SetActorLocation(FVector(Camera->GetActorLocation().X, Camera->GetActorLocation().Y, 70));
+			zoomedOut = false;
+		}
+	}
+	else if(pinchDelta < -1)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("ZoomPinch %f"), pinchDelta));
+		if(!zoomedOut)
+		{
+			Camera->SetActorLocation(FVector(Camera->GetActorLocation().X, Camera->GetActorLocation().Y, 170));
+			zoomedOut = true;
+		}
+	}
+}
+
+void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
+{
+	if (clickHold)
+	{
+		layerPiece->LooseHP(currentTool->currentDamage);
+		FTimerHandle handle;
+		FTimerDelegate HoldDamageDel;
+		HoldDamageDel.BindUFunction(this, FName("HoldDamage"), layerPiece);
+		GetWorldTimerManager().SetTimer(handle, HoldDamageDel, currentTool->holdTimer, false);
+	}
 }
 

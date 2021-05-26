@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Components/PrimitiveComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "AutomaticTools.h"
 #include "LayerPiece.generated.h"
 
 UCLASS()
@@ -30,6 +29,9 @@ public:
 		UStaticMeshComponent* Visible;
 
 	UPROPERTY(editanywhere)
+		class ALayerPiece* lavaPiece;
+
+	UPROPERTY(editanywhere)
 		int HP;
 
 	UPROPERTY(editanywhere)
@@ -40,4 +42,26 @@ public:
 
 	UPROPERTY(editanywhere)
 		TArray<int> materialsIndex;
+
+	//Bool type
+
+	UPROPERTY(editanywhere)
+		bool liquid;
+
+	UPROPERTY(editanywhere)
+		bool indestructible;
+
+	UPROPERTY(editanywhere)
+		bool lava;
+
+	UPROPERTY(editanywhere)
+		bool core;
+
+	//if lava
+
+	void LavaSpread();
+
+	UPROPERTY(editanywhere)
+		TArray<class ALayerPiece*> spreadPieces;
+
 };

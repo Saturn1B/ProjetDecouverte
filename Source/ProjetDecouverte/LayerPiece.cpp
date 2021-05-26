@@ -50,6 +50,18 @@ void ALayerPiece::LooseHP(int damageValue)
 
 void ALayerPiece::Kill()
 {
+	if(lavaPiece != NULL && lavaPiece->lava == true)
+	{
+		lavaPiece->LavaSpread();
+	}
 	Destroy();
+}
+
+void ALayerPiece::LavaSpread()
+{
+	for(ALayerPiece* spreadPiece : spreadPieces)
+	{
+		spreadPiece->indestructible = true;
+	}
 }
 

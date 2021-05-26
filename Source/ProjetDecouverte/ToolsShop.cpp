@@ -18,16 +18,16 @@ void AToolsShop::BeginPlay()
 	Super::BeginPlay();
 	created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
 	created_ui->AddToViewport();
-	toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_1"))));
-	toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_1"))));
-	toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_2"))));
-	toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_2"))));
-	toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_3"))));
-	toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_3"))));
+	//toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_1"))));
+	//toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_1"))));
+	//toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_2"))));
+	//toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_2"))));
+	//toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_3"))));
+	//toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_3"))));
 	mapButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_0")));
 	mapButton->OnClicked.AddDynamic(this, &AToolsShop::ZoomInOut);
 
-	for (UToolsButton* button : toolsButton)
+	/*for (UToolsButton* button : toolsButton)
 	{
 		TArray<AActor*> FoundActors;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAutomaticTools::StaticClass(), FoundActors);
@@ -39,9 +39,9 @@ void AToolsShop::BeginPlay()
 				button->tool = tool;
 			}
 		}
-	}
+	}*/
 
-	for (UToolsActivation* activation : toolsActivation)
+	/*for (UToolsActivation* activation : toolsActivation)
 	{
 		TArray<AActor*> FoundActors;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAutomaticTools::StaticClass(), FoundActors);
@@ -56,11 +56,11 @@ void AToolsShop::BeginPlay()
 
 		activation->SetIsEnabled(false);
 
-		/*TArray<AActor*> FoundActors2;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), UToolsUse::StaticClass(), FoundActors2);
-		activation->currentTool = Cast<UToolsUse>(FoundActors2[0]);*/
+		//TArray<AActor*> FoundActors2;
+		//UGameplayStatics::GetAllActorsOfClass(GetWorld(), UToolsUse::StaticClass(), FoundActors2);
+		//activation->currentTool = Cast<UToolsUse>(FoundActors2[0]);
 
-	}
+	}*/
 }
 
 // Called every frame
