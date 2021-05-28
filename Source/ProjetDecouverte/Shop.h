@@ -7,20 +7,16 @@
 #include "Components/WidgetComponent.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
-#include "Components/Border.h"
-#include "Materials.h"
-#include "MyPlayerController2.h"
-#include "AchievmentsTab.h"
-#include "ToolsShop.generated.h"
+#include "Shop.generated.h"
 
 UCLASS()
-class PROJETDECOUVERTE_API AToolsShop : public AActor
+class PROJETDECOUVERTE_API AShop : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AToolsShop();
+	AShop();
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,21 +33,12 @@ public:
 		UUserWidget* created_ui;
 
 	UPROPERTY(editanywhere)
-		class UButton* mapButton;
-	UPROPERTY(editanywhere)
-		class UButton* achieveButton;
-	UPROPERTY(editanywhere)
-		class UButton* achieveBackButton;
+		class UButton* shopButton;
 
 	UPROPERTY(editanywhere)
-		class AActor* camera;
-
-	UPROPERTY(editanywhere)
-		class AAchievmentsTab* achievmentsTab;
+		class UCanvasPanel* shopPanel;
 
 	UFUNCTION()
-		void ZoomInOut();
+		void ActiveShop();
 
-	UFUNCTION()
-		void AchieveTab();
 };

@@ -4,23 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/WidgetComponent.h"
-#include "Components/Button.h"
-#include "Components/CanvasPanel.h"
-#include "Components/Border.h"
 #include "Materials.h"
-#include "MyPlayerController2.h"
 #include "AchievmentsTab.h"
-#include "ToolsShop.generated.h"
+#include "Achievments.generated.h"
 
 UCLASS()
-class PROJETDECOUVERTE_API AToolsShop : public AActor
+class PROJETDECOUVERTE_API AAchievments : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AToolsShop();
+	AAchievments();
 
 protected:
 	// Called when the game starts or when spawned
@@ -31,27 +26,31 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(editanywhere)
-		TSubclassOf<UUserWidget> bp_ui;
+		int materialToDestroy;
 
 	UPROPERTY(editanywhere)
-		UUserWidget* created_ui;
+		int numberToDestroy;
 
 	UPROPERTY(editanywhere)
-		class UButton* mapButton;
-	UPROPERTY(editanywhere)
-		class UButton* achieveButton;
-	UPROPERTY(editanywhere)
-		class UButton* achieveBackButton;
+		int goldGiven;
 
 	UPROPERTY(editanywhere)
-		class AActor* camera;
+		FString Title;
 
 	UPROPERTY(editanywhere)
-		class AAchievmentsTab* achievmentsTab;
+		FString Paragragh;
 
-	UFUNCTION()
-		void ZoomInOut();
+	UPROPERTY(editanywhere)
+		int index;
 
-	UFUNCTION()
-		void AchieveTab();
+	UPROPERTY(editanywhere)
+		class AMaterials* materialsTotal;
+
+	UPROPERTY(editanywhere)
+		bool isComplete = false;
+
+	void CheckCondition();
+
+	void CompleteAchievment();
+
 };

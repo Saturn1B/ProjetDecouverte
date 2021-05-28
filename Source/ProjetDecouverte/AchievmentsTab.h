@@ -4,16 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Tools.generated.h"
+#include "Achievments.h"
+#include "Components/Border.h"
+#include "Components/CanvasPanel.h"
+#include "Components/TextBlock.h"
+#include "Kismet/GameplayStatics.h"
+#include "AchievmentsTab.generated.h"
 
 UCLASS()
-class PROJETDECOUVERTE_API ATools : public AActor
+class PROJETDECOUVERTE_API AAchievmentsTab : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ATools();
+	AAchievmentsTab();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,46 +28,27 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	//Costs
+	UPROPERTY(editanywhere)
+		TArray<class AAchievments*> achievments;
 
 	UPROPERTY(editanywhere)
-		TArray<float> baseCost;
-
-	TArray<float> currentCost;
+		TArray<class UBorder*> achievmentsUI;
 
 	UPROPERTY(editanywhere)
-		float costCoeff;
-
-	//Damage
+		class UBorder* achievmentsPopup;
 
 	UPROPERTY(editanywhere)
-		float baseDamage;
+		class UTextBlock* popupTitle;
+	UPROPERTY(editanywhere)
+		class UTextBlock* popupPara;
 
-	float currentDamage;
+	void RemoveAchievment(AAchievments* toRemove);
+
+	void HidePopup();
 
 	UPROPERTY(editanywhere)
-		float damageCoeff;
-
-	//Bool
+		class UCanvasPanel* achievments_ui;
 
 	UPROPERTY(editanywhere)
-		bool onHold;
-
-	UPROPERTY(editanywhere)
-		bool onLiquid;
-
-	//Timer
-	
-	UPROPERTY(editanywhere)
-		float holdTimer;
-
-	//Stats
-
-	UPROPERTY(editanywhere)
-		int index;
-
-	float upgradeIndex;
-
-	UPROPERTY(editanywhere)
-		bool isActive;
+		UUserWidget* created_ui;
 };

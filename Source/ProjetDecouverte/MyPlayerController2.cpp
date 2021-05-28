@@ -195,7 +195,7 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 				{
 					if(!currentTool->onHold)
 					{
-						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == false && currentTool->onLiquid == false)
+						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
 							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage);
 						}
@@ -234,6 +234,9 @@ void AMyPlayerController2::OnFingerRelease(const ETouchIndex::Type FingerIndex, 
 	currentTouch = FVector2D(0, 0);
 	previousTouch = FVector2D(0, 0);
 	MouseRotation = FRotator(0, 0, 0);
+	currentPinch = 0;
+	previousPinch = 0;
+	pinchDelta = 0;
 }
 
 void AMyPlayerController2::OnFingerPinch(float AxisValue)
