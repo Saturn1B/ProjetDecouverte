@@ -2,6 +2,8 @@
 
 
 #include "Achievments.h"
+#include "Materials.h"
+#include "AchievmentsTab.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values

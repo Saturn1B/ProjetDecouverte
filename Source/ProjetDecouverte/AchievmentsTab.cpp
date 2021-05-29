@@ -8,7 +8,7 @@
 AAchievmentsTab::AAchievmentsTab()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -16,6 +16,9 @@ AAchievmentsTab::AAchievmentsTab()
 void AAchievmentsTab::BeginPlay()
 {
 	Super::BeginPlay();
+
+	created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
+	created_ui->AddToViewport();
 
 	achievmentsUI.Add(Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("Achievment_01"))));
 	achievmentsUI.Add(Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("Achievment_02"))));
@@ -30,13 +33,18 @@ void AAchievmentsTab::BeginPlay()
 
 	popupTitle = Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("PopupTitle")));
 	popupPara = Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("PopupPara")));
-}
 
-// Called every frame
-void AAchievmentsTab::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
+	achievments_ui = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("Achievments")));
+	achievmentsPopup = Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("AchievmentPopup")));
 
+	achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+
+	achieveButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_1")));
+	achieveBackButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_2")));
+
+	achieveButton->OnClicked.AddDynamic(this, &AAchievmentsTab::AchieveTab);
+	achieveBackButton->OnClicked.AddDynamic(this, &AAchievmentsTab::AchieveTab);
 }
 
 void AAchievmentsTab::RemoveAchievment(AAchievments* toRemove)
@@ -58,5 +66,21 @@ void AAchievmentsTab::RemoveAchievment(AAchievments* toRemove)
 void AAchievmentsTab::HidePopup()
 {
 	achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+}
+
+void AAchievmentsTab::AchieveTab()
+{
+	if (achievments_ui->GetVisibility() == ESlateVisibility::Collapsed)
+	{
+		achievments_ui->SetVisibility(ESlateVisibility::Visible);
+		achieveButton->SetVisibility(ESlateVisibility::Collapsed);
+		achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+	}
+	else
+	{
+		achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+		achieveButton->SetVisibility(ESlateVisibility::Visible);
+		achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+	}
 }
 

@@ -8,7 +8,7 @@
 AToolsShop::AToolsShop()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -24,19 +24,20 @@ void AToolsShop::BeginPlay()
 	//toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_2"))));
 	//toolsButton.Add(Cast<UToolsButton>(created_ui->GetWidgetFromName(TEXT("ToolsButton_3"))));
 	//toolsActivation.Add(Cast<UToolsActivation>(created_ui->GetWidgetFromName(TEXT("ToolsActivation_3"))));
-	achievmentsTab->achievments_ui = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("Achievments")));
-	achievmentsTab->achievmentsPopup = Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("AchievmentPopup")));
-	achievmentsTab->created_ui = created_ui;
 
-	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
-	achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+	//achievmentsTab->achievments_ui = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("Achievments")));
+	//->achievmentsPopup = Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("AchievmentPopup")));
+	//->created_ui = created_ui;
+
+	//achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+	//achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
 
 	mapButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_0")));
-	achieveButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_1")));
-	achieveBackButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_2")));
+	//achieveButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_1")));
+	//achieveBackButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_2")));
 	mapButton->OnClicked.AddDynamic(this, &AToolsShop::ZoomInOut);
-	achieveButton->OnClicked.AddDynamic(this, &AToolsShop::AchieveTab);
-	achieveBackButton->OnClicked.AddDynamic(this, &AToolsShop::AchieveTab);
+	//achieveButton->OnClicked.AddDynamic(this, &AToolsShop::AchieveTab);
+	//achieveBackButton->OnClicked.AddDynamic(this, &AToolsShop::AchieveTab);
 
 	/*for (UToolsButton* button : toolsButton)
 	{
@@ -74,13 +75,6 @@ void AToolsShop::BeginPlay()
 	}*/
 }
 
-// Called every frame
-void AToolsShop::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
 void AToolsShop::ZoomInOut()
 {
 	TArray<AActor*> FoundActors;
@@ -94,22 +88,6 @@ void AToolsShop::ZoomInOut()
 	{
 		camera->SetActorLocation(FVector(camera->GetActorLocation().X, camera->GetActorLocation().Y, camera->GetActorLocation().Z + 100));
 		Cast<AMyPlayerController2>(FoundActors[0])->zoomedOut = true;
-	}
-}
-
-void AToolsShop::AchieveTab()
-{
-	if (achievmentsTab->achievments_ui->GetVisibility() == ESlateVisibility::Collapsed)
-	{
-		achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Visible);
-		achieveButton->SetVisibility(ESlateVisibility::Collapsed);
-		achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
-	}
-	else
-	{
-		achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
-		achieveButton->SetVisibility(ESlateVisibility::Visible);
-		achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
 	}
 }
 

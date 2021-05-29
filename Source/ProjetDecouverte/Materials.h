@@ -6,8 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "Components/WidgetComponent.h"
 #include "Components/TextBlock.h"
-#include "ToolsShop.h"
 #include "Materials.generated.h"
+
+class ToolsShop;
 
 UCLASS()
 class PROJETDECOUVERTE_API AMaterials : public AActor
@@ -23,8 +24,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(editanywhere)
 		TArray<int> materialsCount;

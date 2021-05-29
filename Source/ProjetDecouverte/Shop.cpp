@@ -7,7 +7,7 @@
 AShop::AShop()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -19,17 +19,23 @@ void AShop::BeginPlay()
 	created_ui->AddToViewport();
 	shopButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Shop")));
 	shopPanel = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("ShopPanel")));
+	buttonArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyButton_1"))));
+
+	for (UBuyButton* button : buttonArray)
+	{
+		button->shop = this;
+	}
 
 	shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 
 	shopButton->OnClicked.AddDynamic(this, &AShop::ActiveShop);
-}
 
-// Called every frame
-void AShop::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
+	TArray<AActor*> FoundActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATools::StaticClass(), FoundActor);
+	for (size_t i = 0; i < FoundActor.Num(); i++)
+	{
+		toolsArray.Add(Cast<ATools>(FoundActor[i]));
+	}
 }
 
 void AShop::ActiveShop()

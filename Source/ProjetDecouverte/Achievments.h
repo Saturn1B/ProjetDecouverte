@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Materials.h"
-#include "AchievmentsTab.h"
 #include "Achievments.generated.h"
+
+class AchievmentsTab;
+class Materials;
 
 UCLASS()
 class PROJETDECOUVERTE_API AAchievments : public AActor
@@ -24,6 +25,9 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	//class AchievmentsTab* instance;
+	//class Materials* instance;
 
 	UPROPERTY(editanywhere)
 		int materialToDestroy;

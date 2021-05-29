@@ -7,7 +7,7 @@
 ATools::ATools()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -22,10 +22,37 @@ void ATools::BeginPlay()
 	isActive = false;
 }
 
-// Called every frame
-void ATools::Tick(float DeltaTime)
+void ATools::Buy()
 {
-	Super::Tick(DeltaTime);
+	/*for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		materials->UpdateMaterial(i, -currentCost[i]);
+	}*/
 
+	upgradeIndex += 1;
+
+	for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
+	}
+
+	isActive = true;
+}
+
+void ATools::Upgrade()
+{
+	/*for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		materials->UpdateMaterial(i, -currentCost[i]);
+	}*/
+
+	upgradeIndex += 1;
+
+	for (size_t i = 0; i < currentCost.Num(); i++)
+	{
+		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
+	}
+	//currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
+	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);
 }
 

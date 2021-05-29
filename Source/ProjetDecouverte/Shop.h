@@ -7,6 +7,9 @@
 #include "Components/WidgetComponent.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
+#include "Kismet/GameplayStatics.h"
+#include "Tools.h"
+#include "BuyButton.h"
 #include "Shop.generated.h"
 
 UCLASS()
@@ -23,8 +26,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(editanywhere)
 		TSubclassOf<UUserWidget> bp_ui;
@@ -37,6 +38,12 @@ public:
 
 	UPROPERTY(editanywhere)
 		class UCanvasPanel* shopPanel;
+
+	UPROPERTY(editanywhere)
+		TArray<class ATools*> toolsArray;
+
+	UPROPERTY(editanywhere)
+		TArray<class UBuyButton*> buttonArray;
 
 	UFUNCTION()
 		void ActiveShop();

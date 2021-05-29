@@ -2,13 +2,14 @@
 
 
 #include "Materials.h"
+#include "ToolsShop.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
 AMaterials::AMaterials()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 }
 
@@ -40,13 +41,6 @@ void AMaterials::BeginPlay()
 			}
 		}
 	}*/
-}
-
-// Called every frame
-void AMaterials::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void AMaterials::UpdateMaterial(int index, int value)

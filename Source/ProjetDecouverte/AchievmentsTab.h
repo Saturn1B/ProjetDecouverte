@@ -8,6 +8,7 @@
 #include "Components/Border.h"
 #include "Components/CanvasPanel.h"
 #include "Components/TextBlock.h"
+#include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
 #include "AchievmentsTab.generated.h"
 
@@ -25,8 +26,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(editanywhere)
 		TArray<class AAchievments*> achievments;
@@ -46,8 +45,19 @@ public:
 
 	void HidePopup();
 
+	UFUNCTION()
+		void AchieveTab();
+
 	UPROPERTY(editanywhere)
 		class UCanvasPanel* achievments_ui;
+
+	UPROPERTY(editanywhere)
+		class UButton* achieveButton;
+	UPROPERTY(editanywhere)
+		class UButton* achieveBackButton;
+
+	UPROPERTY(editanywhere)
+		TSubclassOf<UUserWidget> bp_ui;
 
 	UPROPERTY(editanywhere)
 		UUserWidget* created_ui;

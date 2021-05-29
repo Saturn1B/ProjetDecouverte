@@ -27,8 +27,6 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(editanywhere)
 		TSubclassOf<UUserWidget> bp_ui;
@@ -38,20 +36,20 @@ public:
 
 	UPROPERTY(editanywhere)
 		class UButton* mapButton;
-	UPROPERTY(editanywhere)
+	/*UPROPERTY(editanywhere)
 		class UButton* achieveButton;
 	UPROPERTY(editanywhere)
-		class UButton* achieveBackButton;
+		class UButton* achieveBackButton;*/
 
 	UPROPERTY(editanywhere)
 		class AActor* camera;
 
-	UPROPERTY(editanywhere)
-		class AAchievmentsTab* achievmentsTab;
+	/*UPROPERTY(editanywhere)
+		class AAchievmentsTab* achievmentsTab;*/
 
 	UFUNCTION()
 		void ZoomInOut();
 
-	UFUNCTION()
-		void AchieveTab();
+	/*UFUNCTION()
+		void AchieveTab();*/
 };

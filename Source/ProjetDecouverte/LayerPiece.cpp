@@ -8,7 +8,7 @@
 ALayerPiece::ALayerPiece()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
@@ -24,13 +24,6 @@ void ALayerPiece::BeginPlay()
 {
 	Super::BeginPlay();
 	
-}
-
-// Called every frame
-void ALayerPiece::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 void ALayerPiece::LooseHP(int damageValue)
