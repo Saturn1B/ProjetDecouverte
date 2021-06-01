@@ -6,16 +6,17 @@
 #include "GameFramework/Actor.h"
 #include "Components/WidgetComponent.h"
 #include "Components/TextBlock.h"
+#include "BuyButton.h"
 #include "Materials.generated.h"
 
-class ToolsShop;
+class Shop;
 
 UCLASS()
 class PROJETDECOUVERTE_API AMaterials : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AMaterials();
 
@@ -23,7 +24,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 
 	UPROPERTY(editanywhere)
 		TArray<int> materialsCount;
@@ -38,7 +39,7 @@ public:
 		UUserWidget* created_ui;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class AToolsShop* toolsShop;
+		class AShop* shop;
 
 	void UpdateMaterial(int index, int value);
 

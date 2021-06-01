@@ -209,10 +209,10 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 						}
 					}
 
-					/*for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
+					for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
 					{
-						materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex[i], 1);
-					}*/
+						materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex[i], currentTool->currentProd);
+					}
 				}
 				ObjectSelected = Planets[PlanetSelected];
 			}

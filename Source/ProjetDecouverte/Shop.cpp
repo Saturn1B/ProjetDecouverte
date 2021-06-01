@@ -36,6 +36,20 @@ void AShop::BeginPlay()
 	{
 		toolsArray.Add(Cast<ATools>(FoundActor[i]));
 	}
+
+	for (UBuyButton* button : buttonArray)
+	{
+		TArray<AActor*> FoundActors;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATools::StaticClass(), FoundActors);
+		for (AActor* actorTool : FoundActors)
+		{
+			ATools* tool = Cast<ATools>(actorTool);
+			if (tool->index == button->toolIndex)
+			{
+				button->tool = tool;
+			}
+		}
+	}
 }
 
 void AShop::ActiveShop()

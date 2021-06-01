@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "ToolSelector.h"
 #include "Inventory.h"
+#include "Materials.h"
 #include "Tools.generated.h"
 
 UCLASS()
@@ -33,6 +34,16 @@ public:
 
 	UPROPERTY(editanywhere)
 		float costCoeff;
+
+	//Prod
+
+	UPROPERTY(editanywhere)
+		float baseProd;
+
+	float currentProd;
+
+	UPROPERTY(editanywhere)
+		float prodCoeff;
 
 	//Damage
 
@@ -73,4 +84,7 @@ public:
 
 	UPROPERTY(editanywhere)
 		class AInventory* inventory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AMaterials* materials;
 };
