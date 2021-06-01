@@ -13,10 +13,10 @@ UBuyButton::UBuyButton()
 
 void UBuyButton::Clicked()
 {
-	for (ATools* tool : shop->toolsArray)
-	{
-		if(tool->index == toolIndex)
-		{
+	//for (ATools* tool : shop->toolsArray)
+	//{
+		//if(tool->index == toolIndex)
+		//{
 			if(tool->upgradeIndex == 0)
 			{
 				tool->Buy();
@@ -27,7 +27,7 @@ void UBuyButton::Clicked()
 				tool->Upgrade();
 				text->SetText(FText::FromString("UP"));
 			}
-			break;
-		}
-	}
+			//break;
+		//}
+	//}
 }

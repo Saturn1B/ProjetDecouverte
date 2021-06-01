@@ -17,6 +17,7 @@ void ATools::BeginPlay()
 	Super::BeginPlay();
 
 	currentCost = baseCost;
+	currentProd = baseProd;
 	currentDamage = baseDamage;
 	upgradeIndex = 0;
 	isActive = false;
@@ -24,14 +25,18 @@ void ATools::BeginPlay()
 	TArray<AActor*> FoundInventory;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundInventory);
 	inventory = Cast<AInventory>(FoundInventory[0]);
+
+	TArray<AActor*> FoundMaterials;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMaterials::StaticClass(), FoundMaterials);
+	materials = Cast<AMaterials>(FoundMaterials[0]);
 }
 
 void ATools::Buy()
 {
-	/*for (size_t i = 0; i < currentCost.Num(); i++)
+	for (size_t i = 0; i < currentCost.Num(); i++)
 	{
 		materials->UpdateMaterial(i, -currentCost[i]);
-	}*/
+	}
 
 	upgradeIndex += 1;
 
@@ -53,10 +58,10 @@ void ATools::Buy()
 
 void ATools::Upgrade()
 {
-	/*for (size_t i = 0; i < currentCost.Num(); i++)
+	for (size_t i = 0; i < currentCost.Num(); i++)
 	{
 		materials->UpdateMaterial(i, -currentCost[i]);
-	}*/
+	}
 
 	upgradeIndex += 1;
 
@@ -64,7 +69,7 @@ void ATools::Upgrade()
 	{
 		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
 	}
-	//currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
+	currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
 	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);
 }
 

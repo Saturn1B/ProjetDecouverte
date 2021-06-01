@@ -11,22 +11,25 @@ class Shop;
 class Tools;
 
 /**
- * 
+ *
  */
 UCLASS()
 class PROJETDECOUVERTE_API UBuyButton : public UButton
 {
 	GENERATED_BODY()
-	
+
 public :
 
 	UBuyButton();
-	
+
 	UPROPERTY(editanywhere)
 		int toolIndex;
 
 	UPROPERTY(editanywhere)
 		class AShop* shop;
+
+	UPROPERTY(editanywhere)
+		class ATools* tool;
 
 	UPROPERTY(editanywhere)
 		class UTextBlock* text;

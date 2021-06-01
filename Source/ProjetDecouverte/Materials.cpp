@@ -2,7 +2,7 @@
 
 
 #include "Materials.h"
-#include "ToolsShop.h"
+#include "Shop.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
@@ -17,10 +17,10 @@ AMaterials::AMaterials()
 void AMaterials::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	TArray<AActor*> FoundActor;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AToolsShop::StaticClass(), FoundActor);
-	toolsShop = Cast<AToolsShop>(FoundActor[0]);
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShop::StaticClass(), FoundActor);
+	shop = Cast<AShop>(FoundActor[0]);
 
 	created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
 	created_ui->AddToViewport();
@@ -28,7 +28,7 @@ void AMaterials::BeginPlay()
 	materialsCount.Add(0);
 	materialsText[0]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
 
-	/*for (UToolsButton* button : toolsShop->toolsButton)
+	for (UBuyButton* button : shop->buttonArray)
 	{
 		button->SetIsEnabled(true);
 		for (size_t i = 0; i < materialsCount.Num(); i++)
@@ -40,14 +40,14 @@ void AMaterials::BeginPlay()
 				button->SetIsEnabled(false);
 			}
 		}
-	}*/
+	}
 }
 
 void AMaterials::UpdateMaterial(int index, int value)
 {
 	materialsCount[index] += value;
 	materialsText[index]->SetText(FText::FromString(FString::FromInt(materialsCount[index])));
-	/*for (UToolsButton* button : toolsShop->toolsButton)
+	for (UBuyButton* button : shop->buttonArray)
 	{
 		button->SetIsEnabled(true);
 		for (size_t i = 0; i < materialsCount.Num(); i++)
@@ -57,6 +57,6 @@ void AMaterials::UpdateMaterial(int index, int value)
 				button->SetIsEnabled(false);
 			}
 		}
-	}*/
+	}
 }
 
