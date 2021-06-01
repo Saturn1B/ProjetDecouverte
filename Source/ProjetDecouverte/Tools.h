@@ -4,14 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ToolSelector.h"
+#include "Inventory.h"
 #include "Tools.generated.h"
 
 UCLASS()
 class PROJETDECOUVERTE_API ATools : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ATools();
 
@@ -19,7 +21,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 
 
 	//Costs
@@ -51,7 +53,7 @@ public:
 		bool onLiquid;
 
 	//Timer
-	
+
 	UPROPERTY(editanywhere)
 		float holdTimer;
 
@@ -68,4 +70,7 @@ public:
 	void Buy();
 
 	void Upgrade();
+
+	UPROPERTY(editanywhere)
+		class AInventory* inventory;
 };

@@ -15,11 +15,15 @@ ATools::ATools()
 void ATools::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	currentCost = baseCost;
 	currentDamage = baseDamage;
 	upgradeIndex = 0;
 	isActive = false;
+
+	TArray<AActor*> FoundInventory;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundInventory);
+	inventory = Cast<AInventory>(FoundInventory[0]);
 }
 
 void ATools::Buy()
@@ -34,6 +38,14 @@ void ATools::Buy()
 	for (size_t i = 0; i < currentCost.Num(); i++)
 	{
 		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
+	}
+
+	for(UToolSelector* selector : inventory->toolSelector)
+	{
+		if (selector->toolIndex == index)
+		{
+			selector->SetIsEnabled(true);
+		}
 	}
 
 	isActive = true;

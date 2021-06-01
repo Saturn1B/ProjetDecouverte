@@ -34,7 +34,7 @@ AMyPlayerController2::AMyPlayerController2()
 void AMyPlayerController2::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	MyController = Cast<APlayerController>(GetController());
 
 	if (MyController)
@@ -97,7 +97,7 @@ void AMyPlayerController2::Tick(float DeltaTime)
 
 	FVector2D deltaTouch;
 
-	if (onDrag) 
+	if (onDrag)
 	{
 		deltaTouch = currentTouch - previousTouch;
 
