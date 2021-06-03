@@ -3,6 +3,7 @@
 
 #include "Materials.h"
 #include "Shop.h"
+#include "Inventory.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
@@ -22,10 +23,10 @@ void AMaterials::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShop::StaticClass(), FoundActor);
 	shop = Cast<AShop>(FoundActor[0]);
 
-	created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
+	/*created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
 	created_ui->AddToViewport();
 	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("Mat1"))));
-	materialsCount.Add(0);
+	materialsCount.Add(0);*/
 	materialsText[0]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
 
 	for (UBuyButton* button : shop->buttonArray)

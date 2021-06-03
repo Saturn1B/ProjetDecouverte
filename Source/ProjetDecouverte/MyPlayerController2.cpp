@@ -72,6 +72,7 @@ void AMyPlayerController2::BeginPlay()
 	}
 
 	PlanetSelected = 0;
+	ObjectSelected = Planets[PlanetSelected];
 
 	TArray<AActor*> FoundTools;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATools::StaticClass(), FoundTools);
@@ -84,6 +85,14 @@ void AMyPlayerController2::BeginPlay()
 	}
 	currentTool->isActive = true;
 	currentTool->upgradeIndex += 1;
+
+	TArray<AActor*> FoundShop;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShop::StaticClass(), FoundShop);
+	shop = Cast<AShop>(FoundShop[0]);
+
+	TArray<AActor*> FoundInventory;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundInventory);
+	inventory = Cast<AInventory>(FoundInventory[0]);
 }
 
 // Called every frame
@@ -112,9 +121,9 @@ void AMyPlayerController2::Tick(float DeltaTime)
 	MouseRotation = FRotator(deltaTouch.Y, deltaTouch.X, 0) * 0.1;
 
 	//Un objet est séléctionné est peut donc être manipulé
-	if (ObjectSelected != NULL)
+	if (ObjectSelected != NULL && (pinchDelta == 0 || pinchDelta == -1))
 	{
-		if (!zoomedOut)
+		if (!zoomedOut && Cast<APlanet>(ObjectSelected))
 		{
 			//Pour pouvoir bouger dans tous les sens l'objet séléctioné
 			APlanet* Planet = Cast<APlanet>(ObjectSelected);
@@ -123,7 +132,7 @@ void AMyPlayerController2::Tick(float DeltaTime)
 
 			ObjectSelected->SetActorRotation(Planet->PlanetRotation, ETeleportType::None);
 		}
-		else
+		else  if (zoomedOut && Cast<ASolarSystem>(ObjectSelected))
 		{
 			if (deltaTouch.Y >= 4)
 			{
@@ -181,6 +190,7 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 {
 	MyController->GetInputTouchState(ETouchIndex::Touch1, previousTouch.X, previousTouch.Y, onDrag);
 	onDrag = true;
+	clickHold = true;
 
 	if (!zoomedOut)
 	{
@@ -198,20 +208,26 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
 							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage);
+
+							for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
+							{
+								LOG("gain material");
+
+								if (Cast<ALayerPiece>(HitResult.GetActor())->matIndex == i)
+								{
+									materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex[i],
+										FMath::RandRange(Cast<ALayerPiece>(HitResult.GetActor())->minMat + currentTool->currentProd,
+											Cast<ALayerPiece>(HitResult.GetActor())->maxMat + currentTool->currentProd));
+								}
+							}
 						}
 					}
 					else
 					{
 						if (Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
-							clickHold = true;
 							HoldDamage(Cast<ALayerPiece>(HitResult.GetActor()));
 						}
-					}
-
-					for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
-					{
-						materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex[i], currentTool->currentProd);
 					}
 				}
 				ObjectSelected = Planets[PlanetSelected];
@@ -243,23 +259,39 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 {
 	previousPinch = currentPinch;
 	currentPinch = AxisValue;
-	pinchDelta = currentPinch - previousPinch;
-	if(pinchDelta > 1)
+	//pinchDelta = currentPinch - previousPinch;
+
+	if (currentPinch > previousPinch)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("ZoomPinch %f"), pinchDelta));
+		pinchDelta = FMath::Clamp(previousPinch / currentPinch, 0.0f, 1.0f);
+		pinchDelta = pinchDelta - 1;
+	}
+	else if (currentPinch < previousPinch)
+	{
+		pinchDelta = FMath::Clamp(currentPinch / previousPinch, 0.0f, 1.0f);
+		pinchDelta = 1 - pinchDelta;
+	}
+
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("ZoomPinch %f"), pinchDelta));
+
+	if (pinchDelta > -1 && pinchDelta < 0)
+	{
 		if (zoomedOut)
 		{
 			Camera->SetActorLocation(FVector(Camera->GetActorLocation().X, Camera->GetActorLocation().Y, 70));
 			zoomedOut = false;
+			shop->created_ui->SetVisibility(ESlateVisibility::Collapsed);
+			inventory->created_ui->SetVisibility(ESlateVisibility::Visible);
 		}
 	}
-	else if(pinchDelta < -1)
+	else if (pinchDelta < 1 && pinchDelta > 0)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("ZoomPinch %f"), pinchDelta));
-		if(!zoomedOut)
+		if (!zoomedOut)
 		{
 			Camera->SetActorLocation(FVector(Camera->GetActorLocation().X, Camera->GetActorLocation().Y, 170));
 			zoomedOut = true;
+			shop->created_ui->SetVisibility(ESlateVisibility::Visible);
+			inventory->created_ui->SetVisibility(ESlateVisibility::Collapsed);
 		}
 	}
 }
@@ -269,6 +301,17 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 	if (clickHold)
 	{
 		layerPiece->LooseHP(currentTool->currentDamage);
+
+		for (size_t i = 0; i < layerPiece->materialsIndex.Num(); i++)
+		{
+			if (layerPiece->matIndex == i)
+			{
+				materials->UpdateMaterial(layerPiece->materialsIndex[i],
+					FMath::RandRange(layerPiece->minMat + currentTool->currentProd,
+						layerPiece->maxMat + currentTool->currentProd));
+			}
+		}
+
 		FTimerHandle handle;
 		FTimerDelegate HoldDamageDel;
 		HoldDamageDel.BindUFunction(this, FName("HoldDamage"), layerPiece);

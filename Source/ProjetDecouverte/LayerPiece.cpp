@@ -23,7 +23,7 @@ ALayerPiece::ALayerPiece()
 void ALayerPiece::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 void ALayerPiece::LooseHP(int damageValue)

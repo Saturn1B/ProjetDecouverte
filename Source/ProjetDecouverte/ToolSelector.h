@@ -10,6 +10,7 @@
 
 class Inventory;
 class Tools;
+class MyPlayerController2;
 
 /**
  *

@@ -38,9 +38,9 @@ public:
 	//Prod
 
 	UPROPERTY(editanywhere)
-		float baseProd;
+		int baseProd;
 
-	float currentProd;
+	int currentProd;
 
 	UPROPERTY(editanywhere)
 		float prodCoeff;

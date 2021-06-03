@@ -9,6 +9,8 @@
 #include "SolarSystem.h"
 #include "Tools.h"
 #include "Materials.h"
+#include "Shop.h"
+#include "Inventory.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyPlayerController2.generated.h"
@@ -26,7 +28,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -86,4 +88,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class AMaterials* materials;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AShop* shop;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AInventory* inventory;
 };

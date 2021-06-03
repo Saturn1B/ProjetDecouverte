@@ -32,11 +32,11 @@ public:
 	UPROPERTY(editanywhere)
 		TArray<class UTextBlock*> materialsText;
 
-	UPROPERTY(editanywhere)
+	/*UPROPERTY(editanywhere)
 		TSubclassOf<UUserWidget> bp_ui;
 
 	UPROPERTY(editanywhere)
-		UUserWidget* created_ui;
+		UUserWidget* created_ui;*/
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class AShop* shop;

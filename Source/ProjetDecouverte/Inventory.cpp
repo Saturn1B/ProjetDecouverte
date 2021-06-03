@@ -2,6 +2,8 @@
 
 
 #include "Inventory.h"
+#include "ToolSelector.h"
+#include "Materials.h"
 
 // Sets default values
 AInventory::AInventory()
@@ -32,6 +34,10 @@ void AInventory::BeginPlay()
 		selector->inventory = this;
 	}
 
+	materials->materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_1"))));
+	materials->materialsCount.Add(0);
+
+	created_ui->SetVisibility(ESlateVisibility::Visible);
 }
 
 // Called every frame

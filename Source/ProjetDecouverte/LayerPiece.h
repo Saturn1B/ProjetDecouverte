@@ -12,8 +12,8 @@ UCLASS()
 class PROJETDECOUVERTE_API ALayerPiece : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ALayerPiece();
 
@@ -21,7 +21,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 
 	UPROPERTY(editanywhere)
 		UStaticMeshComponent* Visible;
@@ -61,5 +61,16 @@ public:
 
 	UPROPERTY(editanywhere)
 		TArray<class ALayerPiece*> spreadPieces;
+
+	//material given
+
+	UPROPERTY(editanywhere)
+		int minMat;
+
+	UPROPERTY(editanywhere)
+		int maxMat;
+
+	UPROPERTY(editanywhere)
+		int matIndex;
 
 };

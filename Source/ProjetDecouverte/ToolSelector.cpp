@@ -3,6 +3,7 @@
 
 #include "ToolSelector.h"
 #include "Inventory.h"
+#include "MyPlayerController2.h"
 #include "Tools.h"
 
 void UToolSelector::Clicked()
