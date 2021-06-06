@@ -25,23 +25,11 @@ void AMaterials::BeginPlay()
 
 	/*created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
 	created_ui->AddToViewport();
-	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("Mat1"))));
-	materialsCount.Add(0);*/
-	materialsText[0]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
+	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("Mat1"))));*/
 
-	for (UBuyButton* button : shop->buttonArray)
-	{
-		button->SetIsEnabled(true);
-		for (size_t i = 0; i < materialsCount.Num(); i++)
-		{
-			LOG(FString::FromInt(button->tool->baseCost[i]));
-			LOG(FString::FromInt(materialsCount[i]));
-			if (button->tool->baseCost[i] > materialsCount[i])
-			{
-				button->SetIsEnabled(false);
-			}
-		}
-	}
+
+	FTimerHandle handle;
+	GetWorldTimerManager().SetTimer(handle, this, &AMaterials::CheckMat, 0.2f, false);
 }
 
 void AMaterials::UpdateMaterial(int index, int value)
@@ -54,6 +42,24 @@ void AMaterials::UpdateMaterial(int index, int value)
 		for (size_t i = 0; i < materialsCount.Num(); i++)
 		{
 			if (button->tool->currentCost[i] > materialsCount[i])
+			{
+				button->SetIsEnabled(false);
+			}
+		}
+	}
+}
+
+void AMaterials::CheckMat()
+{
+	for (UBuyButton* button : shop->buttonArray)
+	{
+		button->SetIsEnabled(true);
+		LOG(FString::FromInt(materialsCount.Num()));
+		for (size_t i = 0; i < materialsCount.Num(); i++)
+		{
+			LOG(FString::FromInt(button->tool->baseCost[i]));
+			LOG(FString::FromInt(materialsCount[i]));
+			if (button->tool->baseCost[i] > materialsCount[i])
 			{
 				button->SetIsEnabled(false);
 			}

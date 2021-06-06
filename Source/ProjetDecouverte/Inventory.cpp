@@ -3,6 +3,7 @@
 
 #include "Inventory.h"
 #include "ToolSelector.h"
+#include "BonusSelector.h"
 #include "Materials.h"
 
 // Sets default values
@@ -24,20 +25,48 @@ void AInventory::BeginPlay()
 	toolInventory = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("ToolPanel")));
 	invButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("InvButton")));
 	toolSelector.Add(Cast<UToolSelector>(created_ui->GetWidgetFromName(TEXT("ToolInvButton_1"))));
+	toolSelector.Add(Cast<UToolSelector>(created_ui->GetWidgetFromName(TEXT("ToolInvButton_2"))));
+
+	bonusSelector.Add(Cast<UBonusSelector>(created_ui->GetWidgetFromName(TEXT("BonusInvButton_1"))));
+	bonusSelector.Add(Cast<UBonusSelector>(created_ui->GetWidgetFromName(TEXT("BonusInvButton_2"))));
 
 	invButton->OnClicked.AddDynamic(this, &AInventory::ShowToolInv);
 
 	toolInventory->SetVisibility(ESlateVisibility::Collapsed);
 
+	TArray<AActor*> FoundActor;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATools::StaticClass(), FoundActor);
+	for (size_t i = 0; i < FoundActor.Num(); i++)
+	{
+		toolsArray.Add(Cast<ATools>(FoundActor[i]));
+	}
+
 	for (UToolSelector* selector : toolSelector)
 	{
 		selector->inventory = this;
+		for (ATools* tool : toolsArray)
+		{
+			if (tool->index == selector->toolIndex)
+			{
+				selector->tool = tool;
+			}
+		}
+		if (!selector->tool->isActive)
+		{
+			selector->SetIsEnabled(false);
+		}
+	}
+
+	for (UBonusSelector* selector : bonusSelector)
+	{
+		selector->SetIsEnabled(false);
 	}
 
 	materials->materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_1"))));
 	materials->materialsCount.Add(0);
+	materials->materialsText[0]->SetText(FText::FromString(FString::FromInt(materials->materialsCount[0])));
 
-	created_ui->SetVisibility(ESlateVisibility::Visible);
+	//created_ui->SetVisibility(ESlateVisibility::Visible);
 }
 
 // Called every frame

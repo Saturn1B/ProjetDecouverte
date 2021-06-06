@@ -207,7 +207,7 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 					{
 						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
-							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage);
+							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage * damageBonus);
 
 							for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
 							{
@@ -217,7 +217,7 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 								{
 									materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex[i],
 										FMath::RandRange(Cast<ALayerPiece>(HitResult.GetActor())->minMat + currentTool->currentProd,
-											Cast<ALayerPiece>(HitResult.GetActor())->maxMat + currentTool->currentProd));
+											Cast<ALayerPiece>(HitResult.GetActor())->maxMat + currentTool->currentProd) * materialBonus);
 								}
 							}
 						}
@@ -276,7 +276,7 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 
 	if (pinchDelta > -1 && pinchDelta < 0)
 	{
-		if (zoomedOut)
+		if (zoomedOut && PlanetSelected == 0)
 		{
 			Camera->SetActorLocation(FVector(Camera->GetActorLocation().X, Camera->GetActorLocation().Y, 70));
 			zoomedOut = false;
@@ -298,9 +298,19 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 
 void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 {
-	if (clickHold)
+	FHitResult HitResult;
+	MyController->GetHitResultUnderFinger(ETouchIndex::Type::Touch1, ECollisionChannel::ECC_Pawn, false, HitResult);
+
+	if (HitResult.GetActor() && HitResult.GetActor()->GetClass()->IsChildOf(ALayerPiece::StaticClass()))
 	{
-		layerPiece->LooseHP(currentTool->currentDamage);
+		layerPiece = Cast<ALayerPiece>(HitResult.GetActor());
+	}
+
+	if (clickHold && layerPiece->liquid == currentTool->onLiquid)
+	{
+		LOG(layerPiece->GetName());
+
+		layerPiece->LooseHP(currentTool->currentDamage * damageBonus);
 
 		for (size_t i = 0; i < layerPiece->materialsIndex.Num(); i++)
 		{
@@ -308,13 +318,13 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 			{
 				materials->UpdateMaterial(layerPiece->materialsIndex[i],
 					FMath::RandRange(layerPiece->minMat + currentTool->currentProd,
-						layerPiece->maxMat + currentTool->currentProd));
+						layerPiece->maxMat + currentTool->currentProd) * materialBonus);
 			}
 		}
 
 		FTimerHandle handle;
-		FTimerDelegate HoldDamageDel;
-		HoldDamageDel.BindUFunction(this, FName("HoldDamage"), layerPiece);
+		FTimerDelegate HoldDamageDel = FTimerDelegate::CreateUObject(this, &AMyPlayerController2::HoldDamage, layerPiece);
+		//HoldDamageDel.BindUFunction(this, &AMyPlayerController2::HoldDamage, layerPiece);
 		GetWorldTimerManager().SetTimer(handle, HoldDamageDel, currentTool->holdTimer, false);
 	}
 }

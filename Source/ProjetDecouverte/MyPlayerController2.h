@@ -66,6 +66,12 @@ public:
 		int PlanetSelected;
 
 	UPROPERTY(editanywhere)
+		float damageBonus = 1;
+
+	UPROPERTY(editanywhere)
+		float materialBonus = 1;
+
+	UPROPERTY(editanywhere)
 		TArray<class AActor*> Planets;
 
 	UPROPERTY(editanywhere)

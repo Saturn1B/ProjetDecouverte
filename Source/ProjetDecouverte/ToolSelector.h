@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
-#include "MyPlayerController2.h"
 #include "ToolSelector.generated.h"
 
 class Inventory;
@@ -24,6 +23,9 @@ public :
 
 	UPROPERTY(editanywhere)
 		int toolIndex;
+
+	UPROPERTY(editanywhere)
+		class ATools* tool;
 
 	UFUNCTION(BlueprintCallable)
 		void Clicked();

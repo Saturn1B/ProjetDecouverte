@@ -17,8 +17,8 @@ UCLASS()
 class PROJETDECOUVERTE_API AToolsShop : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AToolsShop();
 
@@ -26,7 +26,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 
 	UPROPERTY(editanywhere)
 		TSubclassOf<UUserWidget> bp_ui;

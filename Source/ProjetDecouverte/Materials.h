@@ -43,4 +43,6 @@ public:
 
 	void UpdateMaterial(int index, int value);
 
+	void CheckMat();
+
 };

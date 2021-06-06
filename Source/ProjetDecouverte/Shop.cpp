@@ -20,11 +20,14 @@ void AShop::BeginPlay()
 	shopButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Shop")));
 	shopPanel = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("ShopPanel")));
 	buttonArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyButton_1"))));
+	buttonArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyButton_2"))));
 
 	for (UBuyButton* button : buttonArray)
 	{
 		button->shop = this;
 	}
+
+	created_ui->SetVisibility(ESlateVisibility::Collapsed);
 
 	shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 

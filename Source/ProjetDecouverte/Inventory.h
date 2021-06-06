@@ -7,10 +7,11 @@
 #include "Components/WidgetComponent.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
-#include "ToolSelector.h"
+#include "Tools.h"
 #include "Inventory.generated.h"
 
 class ToolSelector;
+class BonusSelector;
 class Materials;
 
 UCLASS()
@@ -38,6 +39,12 @@ public:
 
 	UPROPERTY(editanywhere)
 		TArray<class UToolSelector*> toolSelector;
+
+	UPROPERTY(editanywhere)
+		TArray<class UBonusSelector*> bonusSelector;
+
+	UPROPERTY(editanywhere)
+		TArray<class ATools*> toolsArray;
 
 	UPROPERTY(editanywhere)
 		class UCanvasPanel* toolInventory;

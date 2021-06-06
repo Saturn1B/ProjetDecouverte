@@ -4,42 +4,38 @@
 
 #include "CoreMinimal.h"
 #include "Components/Button.h"
-#include "Components/TextBlock.h"
-#include "BonusSelector.h"
-#include "BuyButton.generated.h"
-
-class Shop;
-class Tools;
-class Inventory;
+#include "MyPlayerController2.h"
+#include "Kismet/GameplayStatics.h"
+#include "BonusSelector.generated.h"
 
 /**
  *
  */
 UCLASS()
-class PROJETDECOUVERTE_API UBuyButton : public UButton
+class PROJETDECOUVERTE_API UBonusSelector : public UButton
 {
 	GENERATED_BODY()
 
 public :
 
-	UBuyButton();
+	UPROPERTY(editanywhere)
+		int damageBonus;
 
 	UPROPERTY(editanywhere)
-		int toolIndex;
+		int materialBonus;
 
 	UPROPERTY(editanywhere)
-		bool bonus;
+		int index;
 
 	UPROPERTY(editanywhere)
-		class AShop* shop;
-
-	UPROPERTY(editanywhere)
-		class ATools* tool;
-
-	UPROPERTY(editanywhere)
-		class UTextBlock* text;
+		bool damage;
 
 	UFUNCTION(BlueprintCallable)
 		void Clicked();
 
+	UFUNCTION(BlueprintCallable)
+		void RestoreValue();
+
+	UFUNCTION(BlueprintCallable)
+		void RestoreButton();
 };
