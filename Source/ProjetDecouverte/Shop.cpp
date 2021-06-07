@@ -21,6 +21,8 @@ void AShop::BeginPlay()
 	shopPanel = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("ShopPanel")));
 	buttonArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyButton_1"))));
 	buttonArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyButton_2"))));
+	bonusArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyBonus_1"))));
+	bonusArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyBonus_2"))));
 
 	for (UBuyButton* button : buttonArray)
 	{
@@ -50,6 +52,20 @@ void AShop::BeginPlay()
 			if (tool->index == button->toolIndex)
 			{
 				button->tool = tool;
+			}
+		}
+	}
+
+	for (UBuyButton* button : bonusArray)
+	{
+		TArray<AActor*> FoundActors;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundActors);
+		AInventory* inventory = Cast<AInventory>(FoundActors[0]);
+		for (UBonusSelector* bonus : inventory->bonusSelector)
+		{
+			if (bonus->index == button->toolIndex)
+			{
+				button->bonus = bonus;
 			}
 		}
 	}

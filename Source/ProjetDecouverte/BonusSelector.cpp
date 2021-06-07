@@ -23,8 +23,3 @@ void UBonusSelector::RestoreValue()
 	if (damage) { player->damageBonus = 1; }
 	else { player->materialBonus = 1; }
 }
-
-void UBonusSelector::RestoreButton()
-{
-	this->SetIsEnabled(true);
-}

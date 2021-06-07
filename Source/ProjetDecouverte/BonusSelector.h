@@ -28,6 +28,9 @@ public :
 		int index;
 
 	UPROPERTY(editanywhere)
+		TArray<float> cost;
+
+	UPROPERTY(editanywhere)
 		bool damage;
 
 	UFUNCTION(BlueprintCallable)
@@ -35,7 +38,4 @@ public :
 
 	UFUNCTION(BlueprintCallable)
 		void RestoreValue();
-
-	UFUNCTION(BlueprintCallable)
-		void RestoreButton();
 };

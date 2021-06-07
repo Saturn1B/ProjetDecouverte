@@ -10,14 +10,15 @@
 #include "Kismet/GameplayStatics.h"
 #include "Tools.h"
 #include "BuyButton.h"
+#include "BonusSelector.h"
 #include "Shop.generated.h"
 
 UCLASS()
 class PROJETDECOUVERTE_API AShop : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AShop();
 
@@ -25,7 +26,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 
 	UPROPERTY(editanywhere)
 		TSubclassOf<UUserWidget> bp_ui;
@@ -44,6 +45,9 @@ public:
 
 	UPROPERTY(editanywhere)
 		TArray<class UBuyButton*> buttonArray;
+
+	UPROPERTY(editanywhere)
+		TArray<class UBuyButton*> bonusArray;
 
 	UFUNCTION()
 		void ActiveShop();

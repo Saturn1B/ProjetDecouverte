@@ -74,6 +74,8 @@ void AMyPlayerController2::BeginPlay()
 	PlanetSelected = 0;
 	ObjectSelected = Planets[PlanetSelected];
 
+	HidePlanet();
+
 	TArray<AActor*> FoundTools;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATools::StaticClass(), FoundTools);
 	for(AActor* actorTool : FoundTools)
@@ -282,6 +284,7 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 			zoomedOut = false;
 			shop->created_ui->SetVisibility(ESlateVisibility::Collapsed);
 			inventory->created_ui->SetVisibility(ESlateVisibility::Visible);
+			HidePlanet();
 		}
 	}
 	else if (pinchDelta < 1 && pinchDelta > 0)
@@ -292,6 +295,7 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 			zoomedOut = true;
 			shop->created_ui->SetVisibility(ESlateVisibility::Visible);
 			inventory->created_ui->SetVisibility(ESlateVisibility::Collapsed);
+			ShowPlanet();
 		}
 	}
 }
@@ -326,6 +330,62 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 		FTimerDelegate HoldDamageDel = FTimerDelegate::CreateUObject(this, &AMyPlayerController2::HoldDamage, layerPiece);
 		//HoldDamageDel.BindUFunction(this, &AMyPlayerController2::HoldDamage, layerPiece);
 		GetWorldTimerManager().SetTimer(handle, HoldDamageDel, currentTool->holdTimer, false);
+	}
+}
+
+void AMyPlayerController2::HidePlanet()
+{
+	for (size_t i = 0; i < Planets.Num(); i++)
+	{
+		if (i != PlanetSelected)
+		{
+			TArray<AActor*> FoundChildren;
+			TArray<AActor*> FoundChildren2;
+			Planets[i]->GetAttachedActors(FoundChildren);
+			int layersFound = FoundChildren.Num();
+			//LOG(FString::FromInt(FoundChildren.Num()) + "part found");
+			for (size_t j = 0; j < layersFound; j++)
+			{
+				FoundChildren[j]->GetAttachedActors(FoundChildren2);
+				FoundChildren += FoundChildren2;
+				FoundChildren2.Empty();
+			}
+			LOG(FString::FromInt(FoundChildren.Num()) + "part found");
+			for (AActor* piece : FoundChildren)
+			{
+				piece->SetActorHiddenInGame(true);
+				piece->SetActorEnableCollision(false);
+				piece->SetActorTickEnabled(false);
+			}
+		}
+	}
+}
+
+void AMyPlayerController2::ShowPlanet()
+{
+	for (size_t i = 0; i < Planets.Num(); i++)
+	{
+		if (i != PlanetSelected)
+		{
+			TArray<AActor*> FoundChildren;
+			TArray<AActor*> FoundChildren2;
+			Planets[i]->GetAttachedActors(FoundChildren);
+			int layersFound = FoundChildren.Num();
+			LOG(FString::FromInt(FoundChildren.Num()) + "part found");
+			for (size_t j = 0; j < layersFound; j++)
+			{
+				FoundChildren[j]->GetAttachedActors(FoundChildren2);
+				FoundChildren += FoundChildren2;
+				FoundChildren2.Empty();
+			}
+			LOG(FString::FromInt(FoundChildren.Num()) + "part found");
+			for (AActor* piece : FoundChildren)
+			{
+				piece->SetActorHiddenInGame(false);
+				piece->SetActorEnableCollision(true);
+				piece->SetActorTickEnabled(true);
+			}
+		}
 	}
 }
 

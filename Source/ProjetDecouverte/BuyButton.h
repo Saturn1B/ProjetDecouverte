@@ -28,13 +28,19 @@ public :
 		int toolIndex;
 
 	UPROPERTY(editanywhere)
-		bool bonus;
+		bool isBonus;
+
+	UPROPERTY(editanywhere)
+		bool isBought;
 
 	UPROPERTY(editanywhere)
 		class AShop* shop;
 
 	UPROPERTY(editanywhere)
 		class ATools* tool;
+
+	UPROPERTY(editanywhere)
+		class UBonusSelector* bonus;
 
 	UPROPERTY(editanywhere)
 		class UTextBlock* text;

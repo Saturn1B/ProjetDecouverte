@@ -36,6 +36,7 @@ void AMaterials::UpdateMaterial(int index, int value)
 {
 	materialsCount[index] += value;
 	materialsText[index]->SetText(FText::FromString(FString::FromInt(materialsCount[index])));
+
 	for (UBuyButton* button : shop->buttonArray)
 	{
 		button->SetIsEnabled(true);
@@ -44,6 +45,21 @@ void AMaterials::UpdateMaterial(int index, int value)
 			if (button->tool->currentCost[i] > materialsCount[i])
 			{
 				button->SetIsEnabled(false);
+			}
+		}
+	}
+
+	for (UBuyButton* button : shop->bonusArray)
+	{
+		if(!button->isBought)
+		{
+			button->SetIsEnabled(true);
+			for (size_t i = 0; i < materialsCount.Num(); i++)
+			{
+				if (button->bonus->cost[i] > materialsCount[i])
+				{
+					button->SetIsEnabled(false);
+				}
 			}
 		}
 	}
@@ -60,6 +76,21 @@ void AMaterials::CheckMat()
 			LOG(FString::FromInt(button->tool->baseCost[i]));
 			LOG(FString::FromInt(materialsCount[i]));
 			if (button->tool->baseCost[i] > materialsCount[i])
+			{
+				button->SetIsEnabled(false);
+			}
+		}
+	}
+
+	for (UBuyButton* button : shop->bonusArray)
+	{
+		button->SetIsEnabled(true);
+		LOG(FString::FromInt(materialsCount.Num()));
+		for (size_t i = 0; i < materialsCount.Num(); i++)
+		{
+			LOG(FString::FromInt(button->bonus->cost[i]));
+			LOG(FString::FromInt(materialsCount[i]));
+			if (button->bonus->cost[i] > materialsCount[i])
 			{
 				button->SetIsEnabled(false);
 			}

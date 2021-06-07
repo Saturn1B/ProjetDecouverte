@@ -14,7 +14,7 @@ UBuyButton::UBuyButton()
 
 void UBuyButton::Clicked()
 {
-	if (!bonus)
+	if (!isBonus)
 	{
 		if (tool->upgradeIndex == 0)
 		{
@@ -30,16 +30,17 @@ void UBuyButton::Clicked()
 	}
 	else
 	{
-		TArray<AActor*> FoundInventory;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundInventory);
-		AInventory* inventory = Cast<AInventory>(FoundInventory[0]);
-		for (UBonusSelector* selector : inventory->bonusSelector)
-		{
-			if (toolIndex == selector->index)
-			{
-				selector->SetIsEnabled(true);
-				this->SetIsEnabled(false);
-			}
-		}
+		//TArray<AActor*> FoundInventory;
+		//UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundInventory);
+		//AInventory* inventory = Cast<AInventory>(FoundInventory[0]);
+		//for (UBonusSelector* selector : inventory->bonusSelector)
+		//{
+			//if (toolIndex == bonus->index)
+			//{
+		isBought = true;
+		bonus->SetIsEnabled(true);
+		this->SetIsEnabled(false);
+			//}
+		//}
 	}
 }

@@ -46,6 +46,10 @@ public:
 
 	void HoldDamage(class ALayerPiece* layerPiece);
 
+	void HidePlanet();
+
+	void ShowPlanet();
+
 	float pinchDelta;
 	float currentPinch;
 	float previousPinch;
