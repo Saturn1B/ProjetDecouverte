@@ -2,6 +2,7 @@
 
 
 #include "Shop.h"
+#include "Inventory.h"
 
 // Sets default values
 AShop::AShop()
@@ -29,7 +30,7 @@ void AShop::BeginPlay()
 		button->shop = this;
 	}
 
-	created_ui->SetVisibility(ESlateVisibility::Collapsed);
+	//created_ui->SetVisibility(ESlateVisibility::Collapsed);
 
 	shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 

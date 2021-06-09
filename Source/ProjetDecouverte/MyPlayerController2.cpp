@@ -280,7 +280,8 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 	{
 		if (zoomedOut && PlanetSelected == 0)
 		{
-			Camera->SetActorLocation(FVector(Camera->GetActorLocation().X, Camera->GetActorLocation().Y, 70));
+			Camera->SetActorLocation(FVector(-60, Camera->GetActorLocation().Y, 30));
+			Camera->SetActorRotation(FRotator(-20, 0, 0));
 			zoomedOut = false;
 			shop->created_ui->SetVisibility(ESlateVisibility::Collapsed);
 			inventory->created_ui->SetVisibility(ESlateVisibility::Visible);
@@ -291,7 +292,8 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 	{
 		if (!zoomedOut)
 		{
-			Camera->SetActorLocation(FVector(Camera->GetActorLocation().X, Camera->GetActorLocation().Y, 170));
+			Camera->SetActorLocation(FVector(-60, Camera->GetActorLocation().Y, 120));
+			Camera->SetActorRotation(FRotator(-40, 0, 0));
 			zoomedOut = true;
 			shop->created_ui->SetVisibility(ESlateVisibility::Visible);
 			inventory->created_ui->SetVisibility(ESlateVisibility::Collapsed);

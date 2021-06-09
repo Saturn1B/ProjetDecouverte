@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/Button.h"
-#include "MyPlayerController2.h"
 #include "Kismet/GameplayStatics.h"
 #include "BonusSelector.generated.h"
+
+class MyPlayerController2;
 
 /**
  *

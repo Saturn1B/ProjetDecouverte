@@ -2,6 +2,9 @@
 
 
 #include "Tools.h"
+#include "ToolSelector.h"
+#include "Inventory.h"
+#include "Materials.h"
 
 // Sets default values
 ATools::ATools()

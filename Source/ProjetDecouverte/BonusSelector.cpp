@@ -2,6 +2,7 @@
 
 
 #include "BonusSelector.h"
+#include "MyPlayerController2.h"
 
 void UBonusSelector::Clicked()
 {

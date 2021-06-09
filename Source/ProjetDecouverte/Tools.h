@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ToolSelector.h"
-#include "Inventory.h"
-#include "Materials.h"
 #include "Tools.generated.h"
+
+class ToolSelector;
+class Inventory;
+class Materials;
 
 UCLASS()
 class PROJETDECOUVERTE_API ATools : public AActor
