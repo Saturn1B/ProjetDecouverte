@@ -3,6 +3,7 @@
 
 #include "Shop.h"
 #include "Inventory.h"
+#define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
 AShop::AShop()
@@ -57,19 +58,8 @@ void AShop::BeginPlay()
 		}
 	}
 
-	for (UBuyButton* button : bonusArray)
-	{
-		TArray<AActor*> FoundActors;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundActors);
-		AInventory* inventory = Cast<AInventory>(FoundActors[0]);
-		for (UBonusSelector* bonus : inventory->bonusSelector)
-		{
-			if (bonus->index == button->toolIndex)
-			{
-				button->bonus = bonus;
-			}
-		}
-	}
+	FTimerHandle handle;
+	GetWorldTimerManager().SetTimer(handle, this, &AShop::SetButton, 0.1f, false);
 }
 
 void AShop::ActiveShop()
@@ -81,6 +71,24 @@ void AShop::ActiveShop()
 	else if(shopPanel->GetVisibility() == ESlateVisibility::Visible)
 	{
 		shopPanel->SetVisibility(ESlateVisibility::Collapsed);
+	}
+}
+
+void AShop::SetButton()
+{
+	for (UBuyButton* button : bonusArray)
+	{
+		TArray<AActor*> FoundActors;
+		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundActors);
+		AInventory* inventory = Cast<AInventory>(FoundActors[0]);
+		for (UBonusSelector* bonus : inventory->bonusSelector)
+		{
+			LOG("je te deteste");
+			if (bonus->index == button->toolIndex)
+			{
+				button->bonus = bonus;
+			}
+		}
 	}
 }
 

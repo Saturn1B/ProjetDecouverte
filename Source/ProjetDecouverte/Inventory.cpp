@@ -4,7 +4,6 @@
 #include "Inventory.h"
 #include "ToolSelector.h"
 #include "BonusSelector.h"
-#include "Materials.h"
 
 // Sets default values
 AInventory::AInventory()
@@ -61,10 +60,6 @@ void AInventory::BeginPlay()
 	{
 		selector->SetIsEnabled(false);
 	}
-
-	materials->materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_1"))));
-	materials->materialsCount.Add(0);
-	materials->materialsText[0]->SetText(FText::FromString(FString::FromInt(materials->materialsCount[0])));
 
 	//created_ui->SetVisibility(ESlateVisibility::Visible);
 }

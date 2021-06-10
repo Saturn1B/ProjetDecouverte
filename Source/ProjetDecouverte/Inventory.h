@@ -12,7 +12,6 @@
 
 class ToolSelector;
 class BonusSelector;
-class Materials;
 
 UCLASS()
 class PROJETDECOUVERTE_API AInventory : public AActor
@@ -51,9 +50,6 @@ public:
 
 	UPROPERTY(editanywhere)
 		class UButton* invButton;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class AMaterials* materials;
 
 	UFUNCTION()
 		void ShowToolInv();

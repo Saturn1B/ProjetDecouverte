@@ -23,10 +23,21 @@ void AMaterials::BeginPlay()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AShop::StaticClass(), FoundActor);
 	shop = Cast<AShop>(FoundActor[0]);
 
-	/*created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
+	created_ui = CreateWidget<UUserWidget>(GetWorld()->GetGameInstance(), bp_ui);
 	created_ui->AddToViewport();
-	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("Mat1"))));*/
 
+	matPanel = Cast<UCanvasPanel>(created_ui->GetWidgetFromName(TEXT("Materials")));
+	matButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_1")));
+	backButton = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_2")));
+
+	matPanel->SetVisibility(ESlateVisibility::Collapsed);
+
+	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_1"))));
+	materialsCount.Add(0);
+	materialsText[0]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
+
+	matButton->OnClicked.AddDynamic(this, &AMaterials::MatTab);
+	backButton->OnClicked.AddDynamic(this, &AMaterials::MatTab);
 
 	FTimerHandle handle;
 	GetWorldTimerManager().SetTimer(handle, this, &AMaterials::CheckMat, 0.2f, false);
@@ -95,6 +106,20 @@ void AMaterials::CheckMat()
 				button->SetIsEnabled(false);
 			}
 		}
+	}
+}
+
+void AMaterials::MatTab()
+{
+	if (matPanel->GetVisibility() == ESlateVisibility::Collapsed)
+	{
+		matPanel->SetVisibility(ESlateVisibility::Visible);
+		matButton->SetVisibility(ESlateVisibility::Collapsed);
+	}
+	else
+	{
+		matPanel->SetVisibility(ESlateVisibility::Collapsed);
+		matButton->SetVisibility(ESlateVisibility::Visible);
 	}
 }
 

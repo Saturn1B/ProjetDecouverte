@@ -51,6 +51,8 @@ public:
 	UPROPERTY(editanywhere)
 		TArray<class UBuyButton*> bonusArray;
 
+	void SetButton();
+
 	UFUNCTION()
 		void ActiveShop();
 

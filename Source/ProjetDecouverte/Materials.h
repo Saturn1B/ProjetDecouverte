@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "Components/WidgetComponent.h"
 #include "Components/TextBlock.h"
+#include "Components/Button.h"
+#include "Components/CanvasPanel.h"
 #include "BuyButton.h"
 #include "Materials.generated.h"
 
@@ -27,22 +29,33 @@ protected:
 public:
 
 	UPROPERTY(editanywhere)
+		TSubclassOf<UUserWidget> bp_ui;
+
+	UPROPERTY(editanywhere)
+		UUserWidget* created_ui;
+
+	UPROPERTY(editanywhere)
 		TArray<int> materialsCount;
 
 	UPROPERTY(editanywhere)
 		TArray<class UTextBlock*> materialsText;
 
-	/*UPROPERTY(editanywhere)
-		TSubclassOf<UUserWidget> bp_ui;
-
-	UPROPERTY(editanywhere)
-		UUserWidget* created_ui;*/
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class AShop* shop;
+
+	UPROPERTY(editanywhere)
+		class UCanvasPanel* matPanel;
+
+	UPROPERTY(editanywhere)
+		class UButton* matButton;
+
+	UPROPERTY(editanywhere)
+		class UButton* backButton;
 
 	void UpdateMaterial(int index, int value);
 
 	void CheckMat();
 
+	UFUNCTION()
+		void MatTab();
 };
