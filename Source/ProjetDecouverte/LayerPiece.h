@@ -32,6 +32,8 @@ public:
 	UPROPERTY(editanywhere)
 		int HP;
 
+	float HPMultiplier;
+
 	UPROPERTY(editanywhere)
 		float strength;
 
@@ -72,5 +74,10 @@ public:
 
 	UPROPERTY(editanywhere)
 		int matIndex;
+
+	UPROPERTY(editanywhere)
+		UMaterialInterface* coreMat;
+
+	UMaterialInstanceDynamic* dynamicMaterial;
 
 };

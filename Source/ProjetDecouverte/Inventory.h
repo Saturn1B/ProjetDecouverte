@@ -12,6 +12,10 @@
 
 class ToolSelector;
 class BonusSelector;
+class Shop;
+class Parametters;
+class Materials;
+class AchievmentsTab;
 
 UCLASS()
 class PROJETDECOUVERTE_API AInventory : public AActor
@@ -53,4 +57,13 @@ public:
 
 	UFUNCTION()
 		void ShowToolInv();
+
+	UPROPERTY(editanywhere, Category = "UI")
+		class AParametters* parametters;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AShop* shop;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AMaterials* material;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AAchievmentsTab* achievmentsTab;
 };

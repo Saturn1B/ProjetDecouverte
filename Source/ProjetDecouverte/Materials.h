@@ -12,6 +12,9 @@
 #include "Materials.generated.h"
 
 class Shop;
+class Parametters;
+class Inventory;
+class AchievmentsTab;
 
 UCLASS()
 class PROJETDECOUVERTE_API AMaterials : public AActor
@@ -40,9 +43,6 @@ public:
 	UPROPERTY(editanywhere)
 		TArray<class UTextBlock*> materialsText;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class AShop* shop;
-
 	UPROPERTY(editanywhere)
 		class UCanvasPanel* matPanel;
 
@@ -58,4 +58,14 @@ public:
 
 	UFUNCTION()
 		void MatTab();
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+		class AShop* shop;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AParametters* parametters;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AInventory* inventory;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AAchievmentsTab* achievmentsTab;
 };

@@ -2,6 +2,10 @@
 
 
 #include "Parametters.h"
+#include "Shop.h"
+#include "Materials.h"
+#include "Inventory.h"
+#include "AchievmentsTab.h"
 
 // Sets default values
 AParametters::AParametters()
@@ -48,5 +52,14 @@ void AParametters::AchieveTab()
 		paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
 		paramettersButton->SetVisibility(ESlateVisibility::Visible);
 	}
+
+	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
+	shop->shopPanel->SetVisibility(ESlateVisibility::Collapsed);
+	shop->shopButton->SetVisibility(ESlateVisibility::Visible);
+	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
+	material->matButton->SetVisibility(ESlateVisibility::Visible);
+	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
+	achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
 }
 

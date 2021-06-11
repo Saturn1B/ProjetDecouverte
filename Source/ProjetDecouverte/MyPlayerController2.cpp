@@ -17,17 +17,17 @@ AMyPlayerController2::AMyPlayerController2()
 
 	Visible->SetupAttachment(RootComponent);
 	Visible->bHiddenInGame = false;
-
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MyVisualAsset(TEXT("/Game/StarterContent/Shapes/Shape_Sphere.Shape_Sphere"));
+	*/
+	static ConstructorHelpers::FObjectFinder<UForceFeedbackEffect> MyVisualAsset(TEXT("/Game/FeedBack/Haptic01.Haptic01"));
 
 	if (MyVisualAsset.Succeeded())
 	{
-		Visible->SetStaticMesh(MyVisualAsset.Object);
+		haptic1 = MyVisualAsset.Object;
 	}
 	else
 	{
 		LOG("Loading Failed");
-	}*/
+	}
 }
 
 // Called when the game starts or when spawned
@@ -222,6 +222,11 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 											Cast<ALayerPiece>(HitResult.GetActor())->maxMat + currentTool->currentProd) * materialBonus);
 								}
 							}
+
+							/*FLatentActionInfo latentInfo;
+							latentInfo.CallbackTarget = MyController;
+							MyController->PlayDynamicForceFeedback(1.0f, 1.0f, true, true, true, true, EDynamicForceFeedbackAction::Start, latentInfo);*/
+							MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
 						}
 					}
 					else

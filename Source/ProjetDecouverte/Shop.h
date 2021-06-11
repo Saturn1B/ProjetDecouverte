@@ -13,7 +13,10 @@
 #include "BonusSelector.h"
 #include "Shop.generated.h"
 
+class Parametters;
+class Materials;
 class Inventory;
+class AchievmentsTab;
 
 UCLASS()
 class PROJETDECOUVERTE_API AShop : public AActor
@@ -55,5 +58,14 @@ public:
 
 	UFUNCTION()
 		void ActiveShop();
+
+	UPROPERTY(editanywhere, Category = "UI")
+		class AInventory* inventory;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AParametters* parametters;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AMaterials* material;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AAchievmentsTab* achievmentsTab;
 
 };

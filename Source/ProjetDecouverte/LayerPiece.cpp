@@ -24,11 +24,22 @@ void ALayerPiece::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (core)
+	{
+		dynamicMaterial = UMaterialInstanceDynamic::Create(coreMat, this);
+		Visible->SetMaterial(0, dynamicMaterial);
+		HPMultiplier = HP / 10;
+	}
+
 }
 
 void ALayerPiece::LooseHP(int damageValue)
 {
 	HP -= damageValue;
+	if (core)
+	{
+		dynamicMaterial->SetScalarParameterValue(FName("EmissiveMultiplier"), (HP / HPMultiplier) / 10);
+	}
 	if (HP <= 0)
 	{
 		Visible->SetSimulatePhysics(true);

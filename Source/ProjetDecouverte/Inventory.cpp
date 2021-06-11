@@ -4,6 +4,10 @@
 #include "Inventory.h"
 #include "ToolSelector.h"
 #include "BonusSelector.h"
+#include "Parametters.h"
+#include "Shop.h"
+#include "Materials.h"
+#include "AchievmentsTab.h"
 
 // Sets default values
 AInventory::AInventory()
@@ -81,5 +85,14 @@ void AInventory::ShowToolInv()
 	{
 		toolInventory->SetVisibility(ESlateVisibility::Collapsed);
 	}
+
+	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
+	material->matButton->SetVisibility(ESlateVisibility::Visible);
+	shop->shopPanel->SetVisibility(ESlateVisibility::Collapsed);
+	shop->shopButton->SetVisibility(ESlateVisibility::Visible);
+	parametters->paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
+	parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
+	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
 }
 

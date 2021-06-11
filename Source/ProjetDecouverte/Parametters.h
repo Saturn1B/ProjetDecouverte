@@ -8,6 +8,11 @@
 #include "Components/CanvasPanel.h"
 #include "Parametters.generated.h"
 
+class Shop;
+class Materials;
+class Inventory;
+class AchievmentsTab;
+
 UCLASS()
 class PROJETDECOUVERTE_API AParametters : public AActor
 {
@@ -42,4 +47,13 @@ public:
 
 	UFUNCTION()
 		void AchieveTab();
+
+	UPROPERTY(editanywhere, Category = "UI")
+		class AInventory* inventory;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AShop* shop;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AMaterials* material;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AAchievmentsTab* achievmentsTab;
 };

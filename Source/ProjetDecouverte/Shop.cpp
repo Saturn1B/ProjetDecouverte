@@ -2,7 +2,10 @@
 
 
 #include "Shop.h"
+#include "Parametters.h"
+#include "Materials.h"
 #include "Inventory.h"
+#include "AchievmentsTab.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
@@ -31,7 +34,7 @@ void AShop::BeginPlay()
 		button->shop = this;
 	}
 
-	//created_ui->SetVisibility(ESlateVisibility::Collapsed);
+	created_ui->SetVisibility(ESlateVisibility::Collapsed);
 
 	shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 
@@ -72,6 +75,15 @@ void AShop::ActiveShop()
 	{
 		shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 	}
+
+	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
+	parametters->paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
+	parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
+	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
+	material->matButton->SetVisibility(ESlateVisibility::Visible);
+	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
+	achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
 }
 
 void AShop::SetButton()
@@ -80,8 +92,8 @@ void AShop::SetButton()
 	{
 		TArray<AActor*> FoundActors;
 		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundActors);
-		AInventory* inventory = Cast<AInventory>(FoundActors[0]);
-		for (UBonusSelector* bonus : inventory->bonusSelector)
+		AInventory* inv = Cast<AInventory>(FoundActors[0]);
+		for (UBonusSelector* bonus : inv->bonusSelector)
 		{
 			LOG("je te deteste");
 			if (bonus->index == button->toolIndex)

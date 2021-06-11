@@ -104,4 +104,7 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class AInventory* inventory;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UForceFeedbackEffect* haptic1;
 };

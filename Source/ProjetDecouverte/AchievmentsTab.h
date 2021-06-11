@@ -12,12 +12,17 @@
 #include "Kismet/GameplayStatics.h"
 #include "AchievmentsTab.generated.h"
 
+class Shop;
+class Parametters;
+class Materials;
+class Inventory;
+
 UCLASS()
 class PROJETDECOUVERTE_API AAchievmentsTab : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	AAchievmentsTab();
 
@@ -25,7 +30,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 
 	UPROPERTY(editanywhere)
 		TArray<class AAchievments*> achievments;
@@ -61,4 +66,13 @@ public:
 
 	UPROPERTY(editanywhere)
 		UUserWidget* created_ui;
+
+	UPROPERTY(editanywhere, Category = "UI")
+		class AParametters* parametters;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AShop* shop;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AMaterials* material;
+	UPROPERTY(editanywhere, Category = "UI")
+		class AInventory* inventory;
 };

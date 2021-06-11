@@ -2,6 +2,10 @@
 
 
 #include "AchievmentsTab.h"
+#include "Parametters.h"
+#include "Shop.h"
+#include "Materials.h"
+#include "Inventory.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
@@ -82,5 +86,13 @@ void AAchievmentsTab::AchieveTab()
 		achieveButton->SetVisibility(ESlateVisibility::Visible);
 		achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
 	}
+
+	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
+	material->matButton->SetVisibility(ESlateVisibility::Visible);
+	shop->shopPanel->SetVisibility(ESlateVisibility::Collapsed);
+	shop->shopButton->SetVisibility(ESlateVisibility::Visible);
+	parametters->paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
+	parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
+	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
 }
 
