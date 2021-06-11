@@ -17,12 +17,26 @@ ALayerPiece::ALayerPiece()
 
 	Visible->SetupAttachment(RootComponent);
 	Visible->bHiddenInGame = false;
+
+	static ConstructorHelpers::FObjectFinder<UForceFeedbackEffect> MyVisualAsset1(TEXT("/Game/FeedBack/Haptic02.Haptic02"));
+	if (MyVisualAsset1.Succeeded())
+	{
+		haptic1 = MyVisualAsset1.Object;
+	}
+	static ConstructorHelpers::FObjectFinder<UForceFeedbackEffect> MyVisualAsset2(TEXT("/Game/FeedBack/Haptic03.Haptic03"));
+	if (MyVisualAsset2.Succeeded())
+	{
+		haptic2 = MyVisualAsset2.Object;
+	}
+
 }
 
 // Called when the game starts or when spawned
 void ALayerPiece::BeginPlay()
 {
 	Super::BeginPlay();
+
+	MyController = Cast<APlayerController>(GetWorld()->GetFirstPlayerController());
 
 	if (core)
 	{
@@ -46,6 +60,17 @@ void ALayerPiece::LooseHP(int damageValue)
 		Visible->SetEnableGravity(false);
 
 		Visible->AddImpulse(Visible->GetRelativeLocation() * strength);
+
+		if(core)
+		{
+			MyController->ClientPlayForceFeedback(haptic2, false, FName("Haptic3"));
+			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(CamShakeBig, 1);
+		}
+		else
+		{
+			MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic2"));
+			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(CamShakeSmall, 1);
+		}
 
 		FTimerHandle handle;
 		GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 1, false);

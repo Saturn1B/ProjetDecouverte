@@ -23,6 +23,9 @@ protected:
 
 public:
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+		class APlayerController* MyController;
+
 	UPROPERTY(editanywhere)
 		UStaticMeshComponent* Visible;
 
@@ -79,5 +82,21 @@ public:
 		UMaterialInterface* coreMat;
 
 	UMaterialInstanceDynamic* dynamicMaterial;
+
+	//camera shake
+
+	UPROPERTY(editanywhere)
+		TSubclassOf<UMatineeCameraShake> CamShakeSmall;
+
+	UPROPERTY(editanywhere)
+		TSubclassOf<UMatineeCameraShake> CamShakeBig;
+
+	//haptic
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UForceFeedbackEffect* haptic1;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UForceFeedbackEffect* haptic2;
 
 };

@@ -223,9 +223,6 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 								}
 							}
 
-							/*FLatentActionInfo latentInfo;
-							latentInfo.CallbackTarget = MyController;
-							MyController->PlayDynamicForceFeedback(1.0f, 1.0f, true, true, true, true, EDynamicForceFeedbackAction::Start, latentInfo);*/
 							MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
 						}
 					}
@@ -332,6 +329,8 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 						layerPiece->maxMat + currentTool->currentProd) * materialBonus);
 			}
 		}
+
+		MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
 
 		FTimerHandle handle;
 		FTimerDelegate HoldDamageDel = FTimerDelegate::CreateUObject(this, &AMyPlayerController2::HoldDamage, layerPiece);
