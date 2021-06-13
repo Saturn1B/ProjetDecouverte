@@ -2,6 +2,9 @@
 
 
 #include "MyPlayerController2.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraSystem.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
@@ -198,6 +201,7 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 	{
 		FHitResult HitResult;
 		MyController->GetHitResultUnderFinger(ETouchIndex::Type::Touch1, ECollisionChannel::ECC_Pawn, false, HitResult);
+		LOG(FString::SanitizeFloat(HitResult.ImpactPoint.Z));
 
 		if (HitResult.GetActor())
 		{
@@ -209,7 +213,7 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 					{
 						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
-							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage * damageBonus);
+							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
 							for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
 							{
@@ -224,6 +228,8 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 							}
 
 							MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
+
+							UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Cast<ALayerPiece>(HitResult.GetActor())->TouchVFX, HitResult.ImpactPoint);
 						}
 					}
 					else
@@ -318,7 +324,7 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 	{
 		LOG(layerPiece->GetName());
 
-		layerPiece->LooseHP(currentTool->currentDamage * damageBonus);
+		layerPiece->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
 		for (size_t i = 0; i < layerPiece->materialsIndex.Num(); i++)
 		{

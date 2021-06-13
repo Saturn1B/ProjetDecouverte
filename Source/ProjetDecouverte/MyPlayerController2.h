@@ -15,6 +15,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "MyPlayerController2.generated.h"
 
+class UNiagaraSystem;
+
 UCLASS()
 class PROJETDECOUVERTE_API AMyPlayerController2 : public APawn
 {
