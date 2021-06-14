@@ -8,8 +8,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "LayerPiece.generated.h"
 
-class UNiagaraSystem;
-
 UCLASS()
 class PROJETDECOUVERTE_API ALayerPiece : public AActor
 {
@@ -42,7 +40,7 @@ public:
 	UPROPERTY(editanywhere)
 		float strength;
 
-	void LooseHP(int damageValue, FVector destroyLoc);
+	void LooseHP(int damageValue);
 	void Kill();
 
 	UPROPERTY(editanywhere)
@@ -100,13 +98,5 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UForceFeedbackEffect* haptic2;
-
-	//fx
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UNiagaraSystem* TouchVFX;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UNiagaraSystem* DestroyVFX;
 
 };
