@@ -34,7 +34,7 @@ void AShop::BeginPlay()
 		button->shop = this;
 	}
 
-	created_ui->SetVisibility(ESlateVisibility::Collapsed);
+	//created_ui->SetVisibility(ESlateVisibility::Collapsed);
 
 	shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 

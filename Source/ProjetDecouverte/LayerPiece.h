@@ -45,9 +45,6 @@ public:
 	void LooseHP(int damageValue, FVector destroyLoc);
 	void Kill();
 
-	UPROPERTY(editanywhere)
-		TArray<int> materialsIndex;
-
 	//Bool type
 
 	UPROPERTY(editanywhere)

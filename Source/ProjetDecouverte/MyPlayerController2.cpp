@@ -215,17 +215,17 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 						{
 							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
-							for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
-							{
+							//for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
+							//{
 								LOG("gain material");
 
-								if (Cast<ALayerPiece>(HitResult.GetActor())->matIndex == i)
-								{
-									materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex[i],
+								//if (Cast<ALayerPiece>(HitResult.GetActor())->matIndex == i)
+								//{
+									materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->matIndex,
 										FMath::RandRange(Cast<ALayerPiece>(HitResult.GetActor())->minMat + currentTool->currentProd,
 											Cast<ALayerPiece>(HitResult.GetActor())->maxMat + currentTool->currentProd) * materialBonus);
-								}
-							}
+								//}
+							//}
 
 							MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
 
@@ -326,15 +326,15 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 
 		layerPiece->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
-		for (size_t i = 0; i < layerPiece->materialsIndex.Num(); i++)
-		{
-			if (layerPiece->matIndex == i)
-			{
-				materials->UpdateMaterial(layerPiece->materialsIndex[i],
+		//for (size_t i = 0; i < layerPiece->materialsIndex.Num(); i++)
+		//{
+			//if (layerPiece->matIndex == i)
+			//{
+				materials->UpdateMaterial(layerPiece->matIndex,
 					FMath::RandRange(layerPiece->minMat + currentTool->currentProd,
 						layerPiece->maxMat + currentTool->currentProd) * materialBonus);
-			}
-		}
+			//}
+		//}
 
 		MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
 

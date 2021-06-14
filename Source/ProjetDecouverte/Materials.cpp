@@ -38,6 +38,22 @@ void AMaterials::BeginPlay()
 	materialsCount.Add(0);
 	materialsText[0]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
 
+	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_2"))));
+	materialsCount.Add(0);
+	materialsText[1]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
+
+	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_3"))));
+	materialsCount.Add(0);
+	materialsText[2]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
+
+	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_4"))));
+	materialsCount.Add(0);
+	materialsText[3]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
+
+	materialsText.Add(Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("MatNumber_5"))));
+	materialsCount.Add(0);
+	materialsText[4]->SetText(FText::FromString(FString::FromInt(materialsCount[0])));
+
 	matButton->OnClicked.AddDynamic(this, &AMaterials::MatTab);
 	backButton->OnClicked.AddDynamic(this, &AMaterials::MatTab);
 

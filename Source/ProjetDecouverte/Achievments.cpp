@@ -45,6 +45,7 @@ void AAchievments::CheckCondition()
 void AAchievments::CompleteAchievment()
 {
 	isComplete = true;
+	materialsTotal->UpdateMaterial(3, goldGiven);
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAchievmentsTab::StaticClass(), FoundActors);
 	Cast<AAchievmentsTab>(FoundActors[0])->RemoveAchievment(this);
