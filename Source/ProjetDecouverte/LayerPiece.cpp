@@ -2,6 +2,9 @@
 
 
 #include "LayerPiece.h"
+#include "NiagaraComponent.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraSystem.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
@@ -47,7 +50,7 @@ void ALayerPiece::BeginPlay()
 
 }
 
-void ALayerPiece::LooseHP(int damageValue)
+void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 {
 	HP -= damageValue;
 	if (core)
@@ -71,6 +74,9 @@ void ALayerPiece::LooseHP(int damageValue)
 			MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic2"));
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(CamShakeSmall, 1);
 		}
+
+		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), DestroyVFX, destroyLoc);
+
 
 		FTimerHandle handle;
 		GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 1, false);
