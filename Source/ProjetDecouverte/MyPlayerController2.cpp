@@ -288,7 +288,7 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 	{
 		if (zoomedOut && PlanetSelected == 0)
 		{
-			Camera->SetActorLocation(FVector(-60, Camera->GetActorLocation().Y, 30));
+			Camera->SetActorLocation(FVector(-90, Camera->GetActorLocation().Y, 40));
 			Camera->SetActorRotation(FRotator(-20, 0, 0));
 			zoomedOut = false;
 			shop->created_ui->SetVisibility(ESlateVisibility::Collapsed);
@@ -300,8 +300,8 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 	{
 		if (!zoomedOut)
 		{
-			Camera->SetActorLocation(FVector(-60, Camera->GetActorLocation().Y, 120));
-			Camera->SetActorRotation(FRotator(-40, 0, 0));
+			Camera->SetActorLocation(FVector(-160, Camera->GetActorLocation().Y, 70));
+			Camera->SetActorRotation(FRotator(-20, 0, 0));
 			zoomedOut = true;
 			shop->created_ui->SetVisibility(ESlateVisibility::Visible);
 			inventory->created_ui->SetVisibility(ESlateVisibility::Collapsed);
@@ -320,28 +320,31 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 		layerPiece = Cast<ALayerPiece>(HitResult.GetActor());
 	}
 
-	if (clickHold && layerPiece->liquid == currentTool->onLiquid)
+	if (layerPiece->HP > 0 && !layerPiece->indestructible && !layerPiece->lava)
 	{
-		LOG(layerPiece->GetName());
+		if (clickHold && layerPiece->liquid == currentTool->onLiquid)
+		{
+			LOG(layerPiece->GetName());
 
-		layerPiece->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
+			layerPiece->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
-		//for (size_t i = 0; i < layerPiece->materialsIndex.Num(); i++)
-		//{
-			//if (layerPiece->matIndex == i)
+			//for (size_t i = 0; i < layerPiece->materialsIndex.Num(); i++)
 			//{
-				materials->UpdateMaterial(layerPiece->matIndex,
-					FMath::RandRange(layerPiece->minMat + currentTool->currentProd,
-						layerPiece->maxMat + currentTool->currentProd) * materialBonus);
+				//if (layerPiece->matIndex == i)
+				//{
+			materials->UpdateMaterial(layerPiece->matIndex,
+				FMath::RandRange(layerPiece->minMat + currentTool->currentProd,
+					layerPiece->maxMat + currentTool->currentProd) * materialBonus);
 			//}
 		//}
 
-		MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
+			MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
 
-		FTimerHandle handle;
-		FTimerDelegate HoldDamageDel = FTimerDelegate::CreateUObject(this, &AMyPlayerController2::HoldDamage, layerPiece);
-		//HoldDamageDel.BindUFunction(this, &AMyPlayerController2::HoldDamage, layerPiece);
-		GetWorldTimerManager().SetTimer(handle, HoldDamageDel, currentTool->holdTimer, false);
+			FTimerHandle handle;
+			FTimerDelegate HoldDamageDel = FTimerDelegate::CreateUObject(this, &AMyPlayerController2::HoldDamage, layerPiece);
+			//HoldDamageDel.BindUFunction(this, &AMyPlayerController2::HoldDamage, layerPiece);
+			GetWorldTimerManager().SetTimer(handle, HoldDamageDel, currentTool->holdTimer, false);
+		}
 	}
 }
 

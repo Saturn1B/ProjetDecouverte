@@ -31,7 +31,11 @@ ALayerPiece::ALayerPiece()
 	{
 		haptic2 = MyVisualAsset2.Object;
 	}
-
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance> MyVisualAsset3(TEXT("/Game/02_Materials/M_Planet/inst/Lave/M_Crame_inst.M_Crame_inst"));
+	if (MyVisualAsset1.Succeeded())
+	{
+		indestructibleMat = MyVisualAsset3.Object;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -59,10 +63,13 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 	}
 	if (HP <= 0)
 	{
-		Visible->SetSimulatePhysics(true);
-		Visible->SetEnableGravity(false);
+		if(!liquid)
+		{
+			Visible->SetSimulatePhysics(true);
+			Visible->SetEnableGravity(false);
 
-		Visible->AddImpulse(Visible->GetRelativeLocation() * strength);
+			Visible->AddImpulse(Visible->GetRelativeLocation() * strength);
+		}
 
 		if(core)
 		{
@@ -77,6 +84,10 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 
 		UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), DestroyVFX, destroyLoc);
 
+		if (lavaPiece != NULL && lavaPiece->lava == true)
+		{
+			lavaPiece->LavaSpread();
+		}
 
 		FTimerHandle handle;
 		GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 1, false);
@@ -85,10 +96,6 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 
 void ALayerPiece::Kill()
 {
-	if(lavaPiece != NULL && lavaPiece->lava == true)
-	{
-		lavaPiece->LavaSpread();
-	}
 	Destroy();
 }
 
@@ -97,6 +104,7 @@ void ALayerPiece::LavaSpread()
 	for(ALayerPiece* spreadPiece : spreadPieces)
 	{
 		spreadPiece->indestructible = true;
+		spreadPiece->Visible->SetMaterial(0, indestructibleMat);
 	}
 }
 

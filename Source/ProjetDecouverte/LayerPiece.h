@@ -82,6 +82,9 @@ public:
 
 	UMaterialInstanceDynamic* dynamicMaterial;
 
+	UPROPERTY(editanywhere)
+		UMaterialInstance* indestructibleMat;
+
 	//camera shake
 
 	UPROPERTY(editanywhere)
@@ -105,5 +108,4 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UNiagaraSystem* DestroyVFX;
-
 };
