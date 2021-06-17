@@ -129,6 +129,15 @@ void AMaterials::CheckMat()
 
 void AMaterials::MatTab()
 {
+	matUse += 1;
+
+	/*if (matUse == 2)
+	{
+		Tutorisation->ResetPopup();
+		FString text = "C'est pas beaucoup de ressources! Il te faut peut etre un peu plus de motivation. Va dans l'onglet mission pour en trouver";
+		Tutorisation->SetPopup(text, 12.0f, Tutorisation->mission);
+	}*/
+
 	if (matPanel->GetVisibility() == ESlateVisibility::Collapsed)
 	{
 		matPanel->SetVisibility(ESlateVisibility::Visible);

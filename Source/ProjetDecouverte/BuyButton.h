@@ -6,6 +6,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "BonusSelector.h"
+#include "Tutorisation.h"
 #include "BuyButton.generated.h"
 
 class Shop;
@@ -44,6 +45,9 @@ public :
 
 	UPROPERTY(editanywhere)
 		class UTextBlock* text;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class ATutorisation* Tutorisation;
 
 	UFUNCTION(BlueprintCallable)
 		void Clicked();

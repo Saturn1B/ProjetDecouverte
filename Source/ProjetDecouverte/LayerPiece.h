@@ -4,11 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Tutorisation.h"
 #include "Components/PrimitiveComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "LayerPiece.generated.h"
 
 class UNiagaraSystem;
+class AMyPlayerController2;
 
 UCLASS()
 class PROJETDECOUVERTE_API ALayerPiece : public AActor
@@ -108,4 +110,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UNiagaraSystem* DestroyVFX;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AMyPlayerController2* Player;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class ATutorisation* Tutorisation;
 };

@@ -90,6 +90,9 @@ public:
 		bool zoomedOut;
 
 	UPROPERTY(editanywhere)
+		bool tuto1 = false;
+
+	UPROPERTY(editanywhere)
 		FVector2D currentTouch;
 
 	UPROPERTY(editanywhere)

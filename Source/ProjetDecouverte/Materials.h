@@ -9,6 +9,7 @@
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
 #include "BuyButton.h"
+#include "Tutorisation.h"
 #include "Materials.generated.h"
 
 class Shop;
@@ -31,6 +32,8 @@ protected:
 
 public:
 
+	int matUse = 0;
+
 	UPROPERTY(editanywhere)
 		TSubclassOf<UUserWidget> bp_ui;
 
@@ -51,6 +54,9 @@ public:
 
 	UPROPERTY(editanywhere)
 		class UButton* backButton;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class ATutorisation* Tutorisation;
 
 	void UpdateMaterial(int index, int value);
 

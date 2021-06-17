@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Achievments.h"
+#include "Tutorisation.h"
 #include "Components/Border.h"
 #include "Components/CanvasPanel.h"
 #include "Components/TextBlock.h"
@@ -32,6 +33,8 @@ protected:
 
 public:
 
+	int currentIndex;
+
 	UPROPERTY(editanywhere)
 		TArray<class AAchievments*> achievments;
 
@@ -55,6 +58,9 @@ public:
 
 	UPROPERTY(editanywhere)
 		class UCanvasPanel* achievments_ui;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class ATutorisation* Tutorisation;
 
 	UPROPERTY(editanywhere)
 		class UButton* achieveButton;

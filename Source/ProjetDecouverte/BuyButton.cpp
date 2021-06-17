@@ -20,6 +20,16 @@ void UBuyButton::Clicked()
 		{
 			tool->Buy();
 			text->SetText(FText::FromString("UP"));
+			/*if (toolIndex == 1)
+			{
+				TArray<AActor*> FoundTuto;
+				UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATutorisation::StaticClass(), FoundTuto);
+				Tutorisation = Cast<ATutorisation>(FoundTuto[0]);
+
+				Tutorisation->ResetPopup();
+				FString textTuto = "Voila une bonne chose de faite! Tu pourra aussi les améliorer quand t'aura plus de ressource. Pour l'instant retourne sur la planète et va dans ton inventaire pour équiper ton nouvel outil. C'est aussi ici que tu pourra utiliser tes boosts (enfin, quand t'en aura)";
+				Tutorisation->SetPopup(textTuto, 20.0f, Tutorisation->inventory);
+			}*/
 		}
 		else
 		{

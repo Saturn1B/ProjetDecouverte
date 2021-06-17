@@ -5,6 +5,7 @@
 #include "NiagaraComponent.h"
 #include "NiagaraFunctionLibrary.h"
 #include "NiagaraSystem.h"
+#include "MyPlayerController2.h"
 #define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
@@ -45,6 +46,10 @@ void ALayerPiece::BeginPlay()
 
 	MyController = Cast<APlayerController>(GetWorld()->GetFirstPlayerController());
 
+	TArray<AActor*> FoundPlayer;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyPlayerController2::StaticClass(), FoundPlayer);
+	Player = Cast<AMyPlayerController2>(FoundPlayer[0]);
+
 	if (core)
 	{
 		dynamicMaterial = UMaterialInstanceDynamic::Create(coreMat, this);
@@ -69,6 +74,14 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 			Visible->SetEnableGravity(false);
 
 			Visible->AddImpulse(Visible->GetRelativeLocation() * strength);
+
+			/*if (!Player->tuto1)
+			{
+				Player->tuto1 = true;
+				Tutorisation->ResetPopup();
+				FString text = "Hey, bien joue mineur! Belle explosion! Tu peux aller dans l'onglet ressource pour voir ce que t'a récolter. Quoique la roche ça raporte pas grand chose";
+				Tutorisation->SetPopup(text, 15.0f, Tutorisation->ressource);
+			}*/
 		}
 
 		if(core)
@@ -89,8 +102,15 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 			lavaPiece->LavaSpread();
 		}
 
-		FTimerHandle handle;
-		GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 1, false);
+		if (liquid)
+		{
+			Destroy();
+		}
+		else
+		{
+			FTimerHandle handle;
+			GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 1, false);
+		}
 	}
 }
 
