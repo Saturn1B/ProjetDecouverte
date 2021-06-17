@@ -6,8 +6,18 @@
 #include "MyPlayerController2.h"
 #include "Tools.h"
 
+UToolSelector::UToolSelector()
+{
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset1(TEXT("/Game/06_SFX/Sound/SFX_Switch.SFX_Switch"));
+	if (MyAudioAsset1.Succeeded())
+	{
+		selectSound = MyAudioAsset1.Object;
+	}
+}
+
 void UToolSelector::Clicked()
 {
+	UGameplayStatics::PlaySound2D(GetWorld(), selectSound);
 	for(UToolSelector* selector : inventory->toolSelector)
 	{
 		selector->SetIsEnabled(true);

@@ -12,6 +12,11 @@ AAchievments::AAchievments()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset1(TEXT("/Game/06_SFX/Sound/SFX_Achievment.SFX_Achievment"));
+	if (MyAudioAsset1.Succeeded())
+	{
+		achieveSound = MyAudioAsset1.Object;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -44,6 +49,7 @@ void AAchievments::CheckCondition()
 
 void AAchievments::CompleteAchievment()
 {
+	UGameplayStatics::PlaySound2D(GetWorld(), achieveSound);
 	isComplete = true;
 	materialsTotal->UpdateMaterial(3, goldGiven);
 	TArray<AActor*> FoundActors;

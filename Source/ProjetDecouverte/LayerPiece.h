@@ -37,6 +37,11 @@ public:
 		class ALayerPiece* lavaPiece;
 
 	UPROPERTY(editanywhere)
+		class AActor* Planet;
+
+	TArray<AActor*> FoundChildren;
+
+	UPROPERTY(editanywhere)
 		int HP;
 
 	float HPMultiplier;
@@ -116,4 +121,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ATutorisation* Tutorisation;
+
+	//sound
+
+	UPROPERTY(editanywhere, Category = "Sound")
+		TArray<USoundBase*> pickaxeSound;
+	UPROPERTY(editanywhere, Category = "Sound")
+		TArray<USoundBase*> explosionSound;
+	UPROPERTY(editanywhere, Category = "Sound")
+		USoundBase* liquidSound;
 };

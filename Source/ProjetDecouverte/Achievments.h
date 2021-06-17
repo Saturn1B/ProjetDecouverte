@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
 #include "Achievments.generated.h"
 
 class AchievmentsTab;
@@ -52,6 +53,9 @@ public:
 
 	UPROPERTY(editanywhere)
 		bool isComplete = false;
+
+	UPROPERTY(editanywhere, Category = "Sound")
+		USoundBase* achieveSound;
 
 	void CheckCondition();
 

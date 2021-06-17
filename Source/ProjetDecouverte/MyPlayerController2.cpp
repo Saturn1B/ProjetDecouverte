@@ -31,6 +31,12 @@ AMyPlayerController2::AMyPlayerController2()
 	{
 		LOG("Loading Failed");
 	}
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset1(TEXT("/Game/06_SFX/Sound/SFX_Pump1.SFX_Pump1"));
+	if (MyAudioAsset1.Succeeded())
+	{
+		holdSound = MyAudioAsset1.Object;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -98,6 +104,8 @@ void AMyPlayerController2::BeginPlay()
 	TArray<AActor*> FoundInventory;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AInventory::StaticClass(), FoundInventory);
 	inventory = Cast<AInventory>(FoundInventory[0]);
+
+	holdSoundComponent = UGameplayStatics::CreateSound2D(GetWorld(), holdSound);
 }
 
 // Called every frame
@@ -213,29 +221,28 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 					{
 						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
-							Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
 							//for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
 							//{
 								LOG("gain material");
 
-								//if (Cast<ALayerPiece>(HitResult.GetActor())->matIndex == i)
-								//{
+								MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
+
+								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Cast<ALayerPiece>(HitResult.GetActor())->TouchVFX, HitResult.ImpactPoint);
+
 									materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->matIndex,
 										FMath::RandRange(Cast<ALayerPiece>(HitResult.GetActor())->minMat + currentTool->currentProd,
 											Cast<ALayerPiece>(HitResult.GetActor())->maxMat + currentTool->currentProd) * materialBonus);
-								//}
 							//}
+									Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
-							MyController->ClientPlayForceFeedback(haptic1, false, FName("Haptic1"));
-
-							UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Cast<ALayerPiece>(HitResult.GetActor())->TouchVFX, HitResult.ImpactPoint);
-						}
+							}
 					}
 					else
 					{
 						if (Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
+							holdSoundComponent->Play();
 							HoldDamage(Cast<ALayerPiece>(HitResult.GetActor()));
 						}
 					}
@@ -254,6 +261,11 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 
 void AMyPlayerController2::OnFingerRelease(const ETouchIndex::Type FingerIndex, const FVector Location)
 {
+	if (currentTool->onHold && holdSoundComponent != NULL && holdSoundComponent->IsPlaying())
+	{
+		holdSoundComponent->Stop();
+	}
+
 	ObjectSelected = NULL;
 	onDrag = false;
 	clickHold = false;

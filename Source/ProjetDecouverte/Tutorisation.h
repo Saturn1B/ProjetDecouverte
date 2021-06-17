@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/WidgetComponent.h"
 #include "Components/TextBlock.h"
 #include "Components/Border.h"
@@ -52,6 +53,9 @@ public:
 	UPROPERTY(editanywhere)
 		class UTexture2D* inventory;
 
-	void SetPopup(FString text, float time, UTexture2D* image);
+	UPROPERTY(editanywhere, Category = "Sound")
+		USoundBase* achieveSound;
+
+	void SetPopup(FString text, float time, int imageIndex);
 	void ResetPopup();
 };

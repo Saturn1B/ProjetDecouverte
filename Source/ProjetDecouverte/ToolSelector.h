@@ -21,6 +21,8 @@ class PROJETDECOUVERTE_API UToolSelector : public UButton
 
 public :
 
+	UToolSelector();
+
 	UPROPERTY(editanywhere)
 		int toolIndex;
 
@@ -32,4 +34,7 @@ public :
 
 	UPROPERTY(editanywhere)
 		class AInventory* inventory;
+
+	UPROPERTY(editanywhere, Category = "Sound")
+		USoundBase* selectSound;
 };

@@ -33,9 +33,49 @@ ALayerPiece::ALayerPiece()
 		haptic2 = MyVisualAsset2.Object;
 	}
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance> MyVisualAsset3(TEXT("/Game/02_Materials/M_Planet/inst/Lave/M_Crame_inst.M_Crame_inst"));
-	if (MyVisualAsset1.Succeeded())
+	if (MyVisualAsset3.Succeeded())
 	{
 		indestructibleMat = MyVisualAsset3.Object;
+	}
+
+	// find sound
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset1(TEXT("/Game/06_SFX/Sound/SFX_Pickaxe1.SFX_Pickaxe1"));
+	if (MyAudioAsset1.Succeeded())
+	{
+		pickaxeSound.Add(MyAudioAsset1.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset2(TEXT("/Game/06_SFX/Sound/SFX_Pickaxe2.SFX_Pickaxe2"));
+	if (MyAudioAsset2.Succeeded())
+	{
+		pickaxeSound.Add(MyAudioAsset2.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset3(TEXT("/Game/06_SFX/Sound/SFX_Pickaxe2.SFX_Pickaxe2"));
+	if (MyAudioAsset3.Succeeded())
+	{
+		pickaxeSound.Add(MyAudioAsset3.Object);
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset4(TEXT("/Game/06_SFX/Sound/SFX_Pump2.SFX_Pump2"));
+	if (MyAudioAsset4.Succeeded())
+	{
+		liquidSound = MyAudioAsset4.Object;
+	}
+
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset5(TEXT("/Game/06_SFX/Sound/SFX_Explosion1.SFX_Explosion1"));
+	if (MyAudioAsset5.Succeeded())
+	{
+		explosionSound.Add(MyAudioAsset5.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset6(TEXT("/Game/06_SFX/Sound/SFX_Explosion2.SFX_Explosion2"));
+	if (MyAudioAsset6.Succeeded())
+	{
+		explosionSound.Add(MyAudioAsset6.Object);
+	}
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset7(TEXT("/Game/06_SFX/Sound/SFX_Explosion3.SFX_Explosion3"));
+	if (MyAudioAsset7.Succeeded())
+	{
+		explosionSound.Add(MyAudioAsset7.Object);
 	}
 }
 
@@ -55,39 +95,65 @@ void ALayerPiece::BeginPlay()
 		dynamicMaterial = UMaterialInstanceDynamic::Create(coreMat, this);
 		Visible->SetMaterial(0, dynamicMaterial);
 		HPMultiplier = HP / 10;
-	}
 
+		TArray<AActor*> FoundChildren2;
+		Planet->GetAttachedActors(FoundChildren);
+		int layersFound = FoundChildren.Num();
+		LOG(FString::FromInt(FoundChildren.Num()) + "part found");
+		for (size_t j = 0; j < layersFound; j++)
+		{
+			FoundChildren[j]->GetAttachedActors(FoundChildren2);
+			FoundChildren += FoundChildren2;
+			FoundChildren2.Empty();
+		}
+	}
 }
 
 void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 {
 	HP -= damageValue;
+
+	if (liquid)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), liquidSound);
+	}
+	else
+	{
+		int r = FMath::RandRange(0, pickaxeSound.Num() - 1);
+		UGameplayStatics::PlaySound2D(GetWorld(), pickaxeSound[r]);
+	}
+
 	if (core)
 	{
 		dynamicMaterial->SetScalarParameterValue(FName("EmissiveMultiplier"), (HP / HPMultiplier) / 10);
 	}
 	if (HP <= 0)
 	{
-		if(!liquid)
+		if(!liquid && !core)
 		{
 			Visible->SetSimulatePhysics(true);
 			Visible->SetEnableGravity(false);
 
 			Visible->AddImpulse(Visible->GetRelativeLocation() * strength);
 
-			/*if (!Player->tuto1)
+			if (!Player->tuto1)
 			{
 				Player->tuto1 = true;
 				Tutorisation->ResetPopup();
-				FString text = "Hey, bien joue mineur! Belle explosion! Tu peux aller dans l'onglet ressource pour voir ce que t'a récolter. Quoique la roche ça raporte pas grand chose";
-				Tutorisation->SetPopup(text, 15.0f, Tutorisation->ressource);
-			}*/
+				FString text = "Hey, bien joue mineur! Belle explosion! Tu peux aller dans l'onglet ressource pour voir ce que t'a recolter. Quoique la roche ça raporte pas grand chose";
+				Tutorisation->SetPopup(text, 15.0f, 1);
+			}
 		}
 
 		if(core)
 		{
 			MyController->ClientPlayForceFeedback(haptic2, false, FName("Haptic3"));
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(CamShakeBig, 1);
+			for (AActor* piece : FoundChildren)
+			{
+				piece->Destroy();
+			}
+			FoundChildren.Empty();
 		}
 		else
 		{
@@ -104,7 +170,20 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 
 		if (liquid)
 		{
-			Destroy();
+			UGameplayStatics::PlaySound2D(GetWorld(), explosionSound[2]);
+		}
+		else if (core)
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), explosionSound[1]);
+		}
+		else
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), explosionSound[0]);
+		}
+
+		if (liquid || core)
+		{
+			Kill();
 		}
 		else
 		{

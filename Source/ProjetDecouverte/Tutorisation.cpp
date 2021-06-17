@@ -9,6 +9,11 @@ ATutorisation::ATutorisation()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	static ConstructorHelpers::FObjectFinder<USoundBase> MyAudioAsset1(TEXT("/Game/06_SFX/Sound/SFX_Achievment.SFX_Achievment"));
+	if (MyAudioAsset1.Succeeded())
+	{
+		achieveSound = MyAudioAsset1.Object;
+	}
 }
 
 // Called when the game starts or when spawned
@@ -24,8 +29,8 @@ void ATutorisation::BeginPlay()
 	popupText = Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("PopupText")));
 	popup->SetVisibility(ESlateVisibility::Collapsed);
 
-	FString text = "Hey mineur! Bienvenue pour ton premier jour. Le principe est simple, ici on detruit des planetes jusqu'a leur noyau pour en recuperer les ressources. Ne t inquiete pas tout est legal (enfin, tant que tu te fait pas chopper).";
-	SetPopup(text, 20.0f, NULL);
+	FString text = "Hey mineur! Bienvenue pour ton premier jour. Le principe est simple, ici on detruit des planetes jusqu'a leur noyau pour en recuperer les ressources. Ne t'inquiete pas tout est legal (enfin, tant que tu te fait pas chopper).";
+	SetPopup(text, 20.0f, 0);
 }
 
 // Called every frame
@@ -35,17 +40,34 @@ void ATutorisation::Tick(float DeltaTime)
 
 }
 
-void ATutorisation::SetPopup(FString text, float time, UTexture2D* image)
+void ATutorisation::SetPopup(FString text, float time, int imageIndex)
 {
-	if (image == NULL)
+	switch (imageIndex)
 	{
-		popupImage->SetVisibility(ESlateVisibility::Collapsed);
+		case 0:
+			popupImage->SetVisibility(ESlateVisibility::Collapsed);
+			break;
+		case 1:
+			popupImage->SetVisibility(ESlateVisibility::Visible);
+			popupImage->SetBrushFromTexture(ressource);
+			break;
+		case 2 :
+			popupImage->SetVisibility(ESlateVisibility::Visible);
+			popupImage->SetBrushFromTexture(mission);
+			break;
+		case 3 :
+			popupImage->SetVisibility(ESlateVisibility::Visible);
+			popupImage->SetBrushFromTexture(shop);
+			break;
+		case 4 :
+			popupImage->SetVisibility(ESlateVisibility::Visible);
+			popupImage->SetBrushFromTexture(inventory);
+			break;
+		default :
+			break;
 	}
-	else
-	{
-		popupImage->SetVisibility(ESlateVisibility::Visible);
-		popupImage->SetBrushFromTexture(image);
-	}
+
+	UGameplayStatics::PlaySound2D(GetWorld(), achieveSound);
 
 	popup->SetVisibility(ESlateVisibility::Visible);
 	popupText->SetText(FText::FromString(text));
@@ -58,6 +80,6 @@ void ATutorisation::ResetPopup()
 {
 	popup->SetVisibility(ESlateVisibility::Collapsed);
 	popupText->SetText(FText::FromString(""));
-	popupImage = NULL;
+	popupImage->SetBrushFromTexture(NULL);
 }
 

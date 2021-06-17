@@ -49,6 +49,9 @@ public :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ATutorisation* Tutorisation;
 
+	UPROPERTY(editanywhere, Category = "Sound")
+		USoundBase* buySound;
+
 	UFUNCTION(BlueprintCallable)
 		void Clicked();
 

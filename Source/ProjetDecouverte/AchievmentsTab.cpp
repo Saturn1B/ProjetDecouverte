@@ -64,12 +64,12 @@ void AAchievmentsTab::RemoveAchievment(AAchievments* toRemove)
 void AAchievmentsTab::HidePopup()
 {
 	achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
-	/*if (currentIndex == 0)
+	if (currentIndex == 0)
 	{
 		Tutorisation->ResetPopup();
 		FString text = "Ta premiere mission! Felicitation mineur! Tu devrait avoir assez pour acheter ton nouvel outil pour continuer. Dezoom sur la carte galactique puis va dans la boutique (tu peux aussi y acheter des boost mais t'es trop pauvre pour l'instant)";
-		Tutorisation->SetPopup(text, 20.0f, Tutorisation->shop);
-	}*/
+		Tutorisation->SetPopup(text, 20.0f, 3);
+	}
 }
 
 void AAchievmentsTab::AchieveTab()

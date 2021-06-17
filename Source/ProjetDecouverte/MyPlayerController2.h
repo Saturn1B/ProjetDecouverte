@@ -11,6 +11,7 @@
 #include "Materials.h"
 #include "Shop.h"
 #include "Inventory.h"
+#include "Components/AudioComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "MyPlayerController2.generated.h"
@@ -112,4 +113,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UForceFeedbackEffect* haptic1;
+
+	UPROPERTY(editanywhere, Category = "Sound")
+		USoundBase* holdSound;
+	//UPROPERTY(editanywhere, Category = "Sound")
+		UAudioComponent* holdSoundComponent;
 };
