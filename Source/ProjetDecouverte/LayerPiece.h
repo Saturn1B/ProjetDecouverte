@@ -39,7 +39,8 @@ public:
 	UPROPERTY(editanywhere)
 		class AActor* Planet;
 
-	TArray<AActor*> FoundChildren;
+	UPROPERTY(editanywhere)
+		TArray<AActor*> FoundChildren;
 
 	UPROPERTY(editanywhere)
 		int HP;
@@ -51,6 +52,7 @@ public:
 
 	void LooseHP(int damageValue, FVector destroyLoc);
 	void Kill();
+	void DestroyPiece(int i);
 
 	//Bool type
 

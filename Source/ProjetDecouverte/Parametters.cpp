@@ -46,6 +46,7 @@ void AParametters::AchieveTab()
 	{
 		paramettersPanel->SetVisibility(ESlateVisibility::Visible);
 		paramettersButton->SetVisibility(ESlateVisibility::Collapsed);
+		Tutorisation->ResetPopup();
 	}
 	else
 	{

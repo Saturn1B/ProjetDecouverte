@@ -142,6 +142,7 @@ void AMaterials::MatTab()
 	{
 		matPanel->SetVisibility(ESlateVisibility::Visible);
 		matButton->SetVisibility(ESlateVisibility::Collapsed);
+		Tutorisation->ResetPopup();
 	}
 	else
 	{

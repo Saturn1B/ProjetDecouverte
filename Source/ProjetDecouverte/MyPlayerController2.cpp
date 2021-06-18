@@ -221,7 +221,6 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 					{
 						if(Cast<ALayerPiece>(HitResult.GetActor())->liquid == currentTool->onLiquid)
 						{
-
 							//for (size_t i = 0; i < Cast<ALayerPiece>(HitResult.GetActor())->materialsIndex.Num(); i++)
 							//{
 								LOG("gain material");

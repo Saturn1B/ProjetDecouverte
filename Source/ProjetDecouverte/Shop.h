@@ -11,6 +11,7 @@
 #include "Tools.h"
 #include "BuyButton.h"
 #include "BonusSelector.h"
+#include "Tutorisation.h"
 #include "Shop.generated.h"
 
 class Parametters;
@@ -67,5 +68,7 @@ public:
 		class AMaterials* material;
 	UPROPERTY(editanywhere, Category = "UI")
 		class AAchievmentsTab* achievmentsTab;
+	UPROPERTY(EditAnywhere, Category = "UI")
+		class ATutorisation* Tutorisation;
 
 };

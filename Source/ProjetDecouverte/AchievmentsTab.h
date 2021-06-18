@@ -59,8 +59,7 @@ public:
 	UPROPERTY(editanywhere)
 		class UCanvasPanel* achievments_ui;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class ATutorisation* Tutorisation;
+
 
 	UPROPERTY(editanywhere)
 		class UButton* achieveButton;
@@ -73,6 +72,8 @@ public:
 	UPROPERTY(editanywhere)
 		UUserWidget* created_ui;
 
+	UPROPERTY(EditAnywhere, Category = "UI")
+		class ATutorisation* Tutorisation;
 	UPROPERTY(editanywhere, Category = "UI")
 		class AParametters* parametters;
 	UPROPERTY(editanywhere, Category = "UI")

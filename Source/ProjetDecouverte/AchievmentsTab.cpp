@@ -79,6 +79,7 @@ void AAchievmentsTab::AchieveTab()
 		achievments_ui->SetVisibility(ESlateVisibility::Visible);
 		achieveButton->SetVisibility(ESlateVisibility::Collapsed);
 		achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+		Tutorisation->ResetPopup();
 	}
 	else
 	{

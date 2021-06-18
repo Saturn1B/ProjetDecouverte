@@ -11,6 +11,7 @@
 #include "Materials.h"
 #include "Shop.h"
 #include "Inventory.h"
+#include "Materials/MaterialInterface.h"
 #include "Components/AudioComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"

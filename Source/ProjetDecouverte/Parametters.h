@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Tutorisation.h"
 #include "Components/Button.h"
 #include "Components/CanvasPanel.h"
 #include "Parametters.generated.h"
@@ -56,4 +57,6 @@ public:
 		class AMaterials* material;
 	UPROPERTY(editanywhere, Category = "UI")
 		class AAchievmentsTab* achievmentsTab;
+	UPROPERTY(EditAnywhere, Category = "UI")
+		class ATutorisation* Tutorisation;
 };

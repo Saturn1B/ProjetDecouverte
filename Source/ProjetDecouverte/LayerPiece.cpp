@@ -140,7 +140,7 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 			{
 				Player->tuto1 = true;
 				Tutorisation->ResetPopup();
-				FString text = "Hey, bien joue mineur! Belle explosion! Tu peux aller dans l'onglet ressource pour voir ce que t'a recolter. Quoique la roche ça raporte pas grand chose";
+				FString text = "Hey, bien joue mineur! Belle explosion! Tu peux aller dans l'onglet ressource pour voir ce que t'a recolter. Quoique la roche sa raporte pas grand chose";
 				Tutorisation->SetPopup(text, 15.0f, 1);
 			}
 		}
@@ -149,11 +149,6 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 		{
 			MyController->ClientPlayForceFeedback(haptic2, false, FName("Haptic3"));
 			GetWorld()->GetFirstPlayerController()->PlayerCameraManager->StartCameraShake(CamShakeBig, 1);
-			for (AActor* piece : FoundChildren)
-			{
-				piece->Destroy();
-			}
-			FoundChildren.Empty();
 		}
 		else
 		{
@@ -181,9 +176,14 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 			UGameplayStatics::PlaySound2D(GetWorld(), explosionSound[0]);
 		}
 
-		if (liquid || core)
+		if (liquid)
 		{
 			Kill();
+		}
+		else if (core)
+		{
+			FTimerHandle handle;
+			GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 0.4f, false);
 		}
 		else
 		{
@@ -195,7 +195,45 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 
 void ALayerPiece::Kill()
 {
-	Destroy();
+	if (core)
+	{
+		for (AActor* piece : FoundChildren)
+		{
+			if (piece != NULL && Cast<ALayerPiece>(piece) && !Cast<ALayerPiece>(piece)->core)
+			{
+				piece->Destroy();
+			}
+		}
+		//FoundChildren.Empty();
+		Destroy();
+		/*if (FoundChildren.Num() > 1)
+		{
+			DestroyPiece(0);
+		}*/
+	}
+	else
+	{
+		Destroy();
+	}
+}
+
+void ALayerPiece::DestroyPiece(int i)
+{
+	if (FoundChildren[i] != NULL && Cast<ALayerPiece>(FoundChildren[i]) && !Cast<ALayerPiece>(FoundChildren[i])->core)
+	{
+		FoundChildren[i]->Destroy();
+	}
+
+	if (i + 1 < FoundChildren.Num())
+	{
+		FTimerHandle handle;
+		FTimerDelegate TimerDel = FTimerDelegate::CreateUObject(this, &ALayerPiece::DestroyPiece, i+1);
+		GetWorldTimerManager().SetTimer(handle, TimerDel, 0.1f, false);
+	}
+	else
+	{
+		Destroy();
+	}
 }
 
 void ALayerPiece::LavaSpread()

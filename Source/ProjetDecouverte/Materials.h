@@ -55,8 +55,7 @@ public:
 	UPROPERTY(editanywhere)
 		class UButton* backButton;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		class ATutorisation* Tutorisation;
+
 
 	void UpdateMaterial(int index, int value);
 
@@ -65,7 +64,8 @@ public:
 	UFUNCTION()
 		void MatTab();
 
-
+	UPROPERTY(EditAnywhere, Category = "UI")
+		class ATutorisation* Tutorisation;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 		class AShop* shop;
 	UPROPERTY(editanywhere, Category = "UI")

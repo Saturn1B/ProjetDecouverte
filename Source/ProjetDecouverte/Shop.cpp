@@ -70,6 +70,7 @@ void AShop::ActiveShop()
 	if(shopPanel->GetVisibility() == ESlateVisibility::Collapsed)
 	{
 		shopPanel->SetVisibility(ESlateVisibility::Visible);
+		Tutorisation->ResetPopup();
 	}
 	else if(shopPanel->GetVisibility() == ESlateVisibility::Visible)
 	{
