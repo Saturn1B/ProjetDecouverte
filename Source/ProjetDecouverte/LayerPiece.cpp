@@ -84,6 +84,8 @@ void ALayerPiece::BeginPlay()
 {
 	Super::BeginPlay();
 
+	HP = LayerHp + PieceHP;
+
 	MyController = Cast<APlayerController>(GetWorld()->GetFirstPlayerController());
 
 	TArray<AActor*> FoundPlayer;

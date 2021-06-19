@@ -43,6 +43,11 @@ public:
 		TArray<AActor*> FoundChildren;
 
 	UPROPERTY(editanywhere)
+		int LayerHp;
+
+	UPROPERTY(editanywhere)
+		int PieceHP;
+
 		int HP;
 
 	float HPMultiplier;

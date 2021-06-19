@@ -297,7 +297,7 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 
 	if (pinchDelta > -1 && pinchDelta < 0)
 	{
-		if (zoomedOut && PlanetSelected == 0)
+		if (zoomedOut)
 		{
 			Camera->SetActorLocation(FVector(-90, Camera->GetActorLocation().Y, 40));
 			Camera->SetActorRotation(FRotator(-20, 0, 0));
