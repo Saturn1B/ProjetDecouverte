@@ -43,6 +43,45 @@ void UBuyButton::Clicked()
 			text->SetText(FText::FromString("UP"));
 		}
 
+		FString prix = "Prix : ";
+		if (tool->currentCost[0] > 0)
+		{
+			prix += FString::FromInt(tool->currentCost[0]) + " fers";
+		}
+		if (tool->currentCost[1] > 0)
+		{
+			if (prix == "Prix : ")
+			{
+				prix += FString::FromInt(tool->currentCost[1]) + "bronzes";
+			}
+			else
+			{
+				prix += ", " + FString::FromInt(tool->currentCost[1]) + " bronzes";
+			}
+		}
+		if (tool->currentCost[2] > 0)
+		{
+			if (prix == "Prix : ")
+			{
+				prix += FString::FromInt(tool->currentCost[2]) + " ors";
+			}
+			else
+			{
+				prix += ", " + FString::FromInt(tool->currentCost[2]) + " ors";
+			}
+		}
+		if (tool->currentCost[3] > 0)
+		{
+			if (prix == "Prix : ")
+			{
+				prix += FString::FromInt(tool->currentCost[3]) + " diamants";
+			}
+			else
+			{
+				prix += ", " + FString::FromInt(tool->currentCost[3]) + " diamants";
+			}
+		}
+		price->SetText(FText::FromString(prix));
 	}
 	else
 	{

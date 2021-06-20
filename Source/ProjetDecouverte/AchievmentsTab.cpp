@@ -26,6 +26,7 @@ void AAchievmentsTab::BeginPlay()
 
 	achievmentsUI.Add(Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("Achievment_01"))));
 	achievmentsUI.Add(Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("Achievment_02"))));
+	achievmentsUI.Add(Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("Achievment_03"))));
 
 	popupTitle = Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("PopupTitle")));
 	popupPara = Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("PopupPara")));
@@ -74,26 +75,31 @@ void AAchievmentsTab::HidePopup()
 
 void AAchievmentsTab::AchieveTab()
 {
+	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
+	shop->shopPanel->SetVisibility(ESlateVisibility::Collapsed);
+	parametters->paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
+	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
+
 	if (achievments_ui->GetVisibility() == ESlateVisibility::Collapsed)
 	{
 		achievments_ui->SetVisibility(ESlateVisibility::Visible);
 		achieveButton->SetVisibility(ESlateVisibility::Collapsed);
 		achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
 		Tutorisation->ResetPopup();
+
+		material->matButton->SetVisibility(ESlateVisibility::Hidden);
+		shop->shopButton->SetVisibility(ESlateVisibility::Hidden);
+		parametters->paramettersButton->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else
 	{
 		achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
 		achieveButton->SetVisibility(ESlateVisibility::Visible);
 		achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
-	}
 
-	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
-	material->matButton->SetVisibility(ESlateVisibility::Visible);
-	shop->shopPanel->SetVisibility(ESlateVisibility::Collapsed);
-	shop->shopButton->SetVisibility(ESlateVisibility::Visible);
-	parametters->paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
-	parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
-	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
+		material->matButton->SetVisibility(ESlateVisibility::Visible);
+		shop->shopButton->SetVisibility(ESlateVisibility::Visible);
+		parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
+	}
 }
 

@@ -51,7 +51,7 @@ void AAchievments::CompleteAchievment()
 {
 	UGameplayStatics::PlaySound2D(GetWorld(), achieveSound);
 	isComplete = true;
-	materialsTotal->UpdateMaterial(3, goldGiven);
+	materialsTotal->UpdateMaterial(2, goldGiven);
 	TArray<AActor*> FoundActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAchievmentsTab::StaticClass(), FoundActors);
 	Cast<AAchievmentsTab>(FoundActors[0])->RemoveAchievment(this);

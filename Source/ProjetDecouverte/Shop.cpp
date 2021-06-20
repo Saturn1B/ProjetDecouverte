@@ -57,6 +57,45 @@ void AShop::BeginPlay()
 			if (tool->index == button->toolIndex)
 			{
 				button->tool = tool;
+				FString prix = "Prix : ";
+				if (button->tool->baseCost[0] > 0)
+				{
+					prix += FString::FromInt(tool->baseCost[0]) + " fers";
+				}
+				if (button->tool->baseCost[1] > 0)
+				{
+					if (prix == "Prix : ")
+					{
+						prix += FString::FromInt(tool->baseCost[1]) + " bronzes";
+					}
+					else
+					{
+						prix += ", " + FString::FromInt(tool->baseCost[1]) + " bronzes";
+					}
+				}
+				if (button->tool->baseCost[2] > 0)
+				{
+					if (prix == "Prix : ")
+					{
+						prix += FString::FromInt(tool->baseCost[2]) + " ors";
+					}
+					else
+					{
+						prix += ", " + FString::FromInt(tool->baseCost[2]) + " ors";
+					}
+				}
+				if (button->tool->baseCost[3] > 0)
+				{
+					if (prix == "Prix : ")
+					{
+						prix += FString::FromInt(tool->baseCost[3]) + " diamants";
+					}
+					else
+					{
+						prix += ", " + FString::FromInt(tool->baseCost[3]) + " diamants";
+					}
+				}
+				button->price->SetText(FText::FromString(prix));
 			}
 		}
 	}
@@ -67,24 +106,29 @@ void AShop::BeginPlay()
 
 void AShop::ActiveShop()
 {
+	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
+	parametters->paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
+	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+
 	if(shopPanel->GetVisibility() == ESlateVisibility::Collapsed)
 	{
 		shopPanel->SetVisibility(ESlateVisibility::Visible);
 		Tutorisation->ResetPopup();
+
+		parametters->paramettersButton->SetVisibility(ESlateVisibility::Hidden);
+		material->matButton->SetVisibility(ESlateVisibility::Hidden);
+		achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else if(shopPanel->GetVisibility() == ESlateVisibility::Visible)
 	{
 		shopPanel->SetVisibility(ESlateVisibility::Collapsed);
-	}
 
-	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
-	parametters->paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
-	parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
-	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
-	material->matButton->SetVisibility(ESlateVisibility::Visible);
-	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
-	achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
-	achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+		parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
+		material->matButton->SetVisibility(ESlateVisibility::Visible);
+		achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
+	}
 }
 
 void AShop::SetButton()

@@ -20,9 +20,8 @@ void ATools::BeginPlay()
 	Super::BeginPlay();
 
 	currentCost = baseCost;
-	currentProd = baseProd;
 	currentDamage = baseDamage;
-	upgradeIndex = 0;
+	upgradeIndex = 1;
 	isActive = false;
 
 	TArray<AActor*> FoundInventory;
@@ -72,7 +71,6 @@ void ATools::Upgrade()
 	{
 		currentCost[i] = FMath::RoundHalfToEven(baseCost[i] * FMath::Pow(costCoeff, upgradeIndex));
 	}
-	currentProd = FMath::RoundHalfToEven((baseProd * upgradeIndex) * prodCoeff);
 	currentDamage = FMath::RoundHalfToEven((baseDamage * upgradeIndex) * damageCoeff);
 }
 

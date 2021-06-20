@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/WidgetComponent.h"
 #include "Components/TextBlock.h"
+#include "Components/Button.h"
 #include "Components/Border.h"
 #include "Components/Image.h"
 #include "Engine/Texture2D.h"
@@ -39,6 +40,9 @@ public:
 		class UBorder* popup;
 
 	UPROPERTY(editanywhere)
+		class UButton* button;
+
+	UPROPERTY(editanywhere)
 		class UImage* popupImage;
 
 	UPROPERTY(editanywhere)
@@ -57,5 +61,7 @@ public:
 		USoundBase* achieveSound;
 
 	void SetPopup(FString text, float time, int imageIndex);
-	void ResetPopup();
+
+	UFUNCTION()
+		void ResetPopup();
 };

@@ -27,7 +27,10 @@ void ATutorisation::BeginPlay()
 	popup = Cast<UBorder>(created_ui->GetWidgetFromName(TEXT("Popup")));
 	popupImage = Cast<UImage>(created_ui->GetWidgetFromName(TEXT("PopupImage")));
 	popupText = Cast<UTextBlock>(created_ui->GetWidgetFromName(TEXT("PopupText")));
+	button = Cast<UButton>(created_ui->GetWidgetFromName(TEXT("Button_3")));
 	popup->SetVisibility(ESlateVisibility::Collapsed);
+
+	button->OnClicked.AddDynamic(this, &ATutorisation::ResetPopup);
 
 	FString text = "Hey mineur! Bienvenue pour ton premier jour. Le principe est simple, ici on detruit des planetes jusqu'a leur noyau pour en recuperer les ressources. Ne t'inquiete pas tout est legal (enfin, tant que tu te fait pas chopper).";
 	SetPopup(text, 20.0f, 0);

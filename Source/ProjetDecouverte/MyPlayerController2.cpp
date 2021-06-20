@@ -230,8 +230,8 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 								UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Cast<ALayerPiece>(HitResult.GetActor())->TouchVFX, HitResult.ImpactPoint);
 
 									materials->UpdateMaterial(Cast<ALayerPiece>(HitResult.GetActor())->matIndex,
-										FMath::RandRange(Cast<ALayerPiece>(HitResult.GetActor())->minMat + currentTool->currentProd,
-											Cast<ALayerPiece>(HitResult.GetActor())->maxMat + currentTool->currentProd) * materialBonus);
+										FMath::RandRange(Cast<ALayerPiece>(HitResult.GetActor())->minMat,
+											Cast<ALayerPiece>(HitResult.GetActor())->maxMat) * materialBonus);
 							//}
 									Cast<ALayerPiece>(HitResult.GetActor())->LooseHP(currentTool->currentDamage * damageBonus, HitResult.ImpactPoint);
 
@@ -344,8 +344,8 @@ void AMyPlayerController2::HoldDamage(class ALayerPiece* layerPiece)
 				//if (layerPiece->matIndex == i)
 				//{
 			materials->UpdateMaterial(layerPiece->matIndex,
-				FMath::RandRange(layerPiece->minMat + currentTool->currentProd,
-					layerPiece->maxMat + currentTool->currentProd) * materialBonus);
+				FMath::RandRange(layerPiece->minMat,
+					layerPiece->maxMat) * materialBonus);
 			//}
 		//}
 

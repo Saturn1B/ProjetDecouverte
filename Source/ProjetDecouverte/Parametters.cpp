@@ -42,25 +42,30 @@ void AParametters::Tick(float DeltaTime)
 
 void AParametters::AchieveTab()
 {
+	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
+	shop->shopPanel->SetVisibility(ESlateVisibility::Collapsed);
+	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
+	achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+
 	if (paramettersPanel->GetVisibility() == ESlateVisibility::Collapsed)
 	{
 		paramettersPanel->SetVisibility(ESlateVisibility::Visible);
 		paramettersButton->SetVisibility(ESlateVisibility::Collapsed);
 		Tutorisation->ResetPopup();
+
+		shop->shopButton->SetVisibility(ESlateVisibility::Hidden);
+		material->matButton->SetVisibility(ESlateVisibility::Hidden);
+		achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else
 	{
 		paramettersPanel->SetVisibility(ESlateVisibility::Collapsed);
 		paramettersButton->SetVisibility(ESlateVisibility::Visible);
-	}
 
-	inventory->toolInventory->SetVisibility(ESlateVisibility::Collapsed);
-	shop->shopPanel->SetVisibility(ESlateVisibility::Collapsed);
-	shop->shopButton->SetVisibility(ESlateVisibility::Visible);
-	material->matPanel->SetVisibility(ESlateVisibility::Collapsed);
-	material->matButton->SetVisibility(ESlateVisibility::Visible);
-	achievmentsTab->achievments_ui->SetVisibility(ESlateVisibility::Collapsed);
-	achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
-	achievmentsTab->achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
+		shop->shopButton->SetVisibility(ESlateVisibility::Visible);
+		material->matButton->SetVisibility(ESlateVisibility::Visible);
+		achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
+	}
 }
 

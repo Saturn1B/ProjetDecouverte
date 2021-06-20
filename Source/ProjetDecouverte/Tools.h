@@ -36,16 +36,6 @@ public:
 	UPROPERTY(editanywhere)
 		float costCoeff;
 
-	//Prod
-
-	UPROPERTY(editanywhere)
-		int baseProd;
-
-	int currentProd;
-
-	UPROPERTY(editanywhere)
-		float prodCoeff;
-
 	//Damage
 
 	UPROPERTY(editanywhere)

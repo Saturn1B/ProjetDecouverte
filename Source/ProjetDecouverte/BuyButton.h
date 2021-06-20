@@ -46,6 +46,9 @@ public :
 	UPROPERTY(editanywhere)
 		class UTextBlock* text;
 
+	UPROPERTY(editanywhere)
+		class UTextBlock* price;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ATutorisation* Tutorisation;
 
