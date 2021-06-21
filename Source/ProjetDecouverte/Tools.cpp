@@ -5,6 +5,7 @@
 #include "ToolSelector.h"
 #include "Inventory.h"
 #include "Materials.h"
+#define LOG(fstring) GLog->Log(fstring)
 
 // Sets default values
 ATools::ATools()
@@ -49,6 +50,7 @@ void ATools::Buy()
 
 	for(UToolSelector* selector : inventory->toolSelector)
 	{
+		LOG("connard");
 		if (selector->toolIndex == index)
 		{
 			selector->SetIsEnabled(true);

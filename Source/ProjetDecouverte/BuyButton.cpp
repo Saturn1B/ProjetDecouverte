@@ -22,7 +22,7 @@ void UBuyButton::Clicked()
 	UGameplayStatics::PlaySound2D(GetWorld(), buySound);
 	if (!isBonus)
 	{
-		if (tool->upgradeIndex == 0)
+		if (tool->upgradeIndex == 1)
 		{
 			tool->Buy();
 			text->SetText(FText::FromString("UP"));
