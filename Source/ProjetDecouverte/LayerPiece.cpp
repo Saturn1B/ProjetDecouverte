@@ -138,12 +138,19 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 
 			Visible->AddImpulse(Visible->GetRelativeLocation() * strength);
 
-			if (!Player->tuto1)
+			if (!Player->tuto1 && Tutorisation != NULL)
 			{
 				Player->tuto1 = true;
 				Tutorisation->ResetPopup();
 				FString text = "Hey, bien joue mineur! Belle explosion! Tu peux aller dans l'onglet ressource pour voir ce que t'a recolter. Quoique la roche sa raporte pas grand chose";
 				Tutorisation->SetPopup(text, 15.0f, 1);
+			}
+			else if (Player->tuto1 && !Player->tuto2 && Tutorisation != NULL)
+			{
+				Player->tuto2 = true;
+				Tutorisation->ResetPopup();
+				FString text = "Tiens on dirait qu'il y a de l'eau la dessous, il te faudra peut etre un aute outil pour le degager. Va dans la carte galactique, y a la boutique, tu pourra y trouver de nouveaux outils (et des boosts)";
+				Tutorisation->SetPopup(text, 15.0f, 0);
 			}
 		}
 
@@ -162,7 +169,7 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 
 		if (lavaPiece != NULL && lavaPiece->lava == true)
 		{
-			lavaPiece->LavaSpread();
+			lavaPiece->LavaSpread(destroyLoc);
 		}
 
 		if (liquid)
@@ -185,7 +192,7 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 		else if (core)
 		{
 			FTimerHandle handle;
-			GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 0.4f, false);
+			GetWorldTimerManager().SetTimer(handle, this, &ALayerPiece::Kill, 0.1f, false);
 		}
 		else
 		{
@@ -199,6 +206,12 @@ void ALayerPiece::Kill()
 {
 	if (core)
 	{
+		Player->tuto2 = false;
+
+		if (CoreAchieve != NULL)
+		{
+			CoreAchieve->CompleteAchievment();
+		}
 		for (AActor* piece : FoundChildren)
 		{
 			if (piece != NULL && Cast<ALayerPiece>(piece) && !Cast<ALayerPiece>(piece)->core)
@@ -238,8 +251,10 @@ void ALayerPiece::DestroyPiece(int i)
 	}
 }
 
-void ALayerPiece::LavaSpread()
+void ALayerPiece::LavaSpread(FVector destroyLoc)
 {
+	UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), LavaSpreadFX, destroyLoc);
+
 	for(ALayerPiece* spreadPiece : spreadPieces)
 	{
 		spreadPiece->indestructible = true;

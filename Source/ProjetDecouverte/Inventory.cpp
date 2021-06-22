@@ -32,6 +32,7 @@ void AInventory::BeginPlay()
 
 	bonusSelector.Add(Cast<UBonusSelector>(created_ui->GetWidgetFromName(TEXT("BonusInvButton_1"))));
 	bonusSelector.Add(Cast<UBonusSelector>(created_ui->GetWidgetFromName(TEXT("BonusInvButton_2"))));
+	bonusSelector.Add(Cast<UBonusSelector>(created_ui->GetWidgetFromName(TEXT("BonusInvButton_3"))));
 
 	invButton->OnClicked.AddDynamic(this, &AInventory::ShowToolInv);
 

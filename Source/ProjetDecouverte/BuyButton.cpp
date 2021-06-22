@@ -33,8 +33,8 @@ void UBuyButton::Clicked()
 				Tutorisation = Cast<ATutorisation>(FoundTuto[0]);
 
 				Tutorisation->ResetPopup();
-				FString textTuto = "Voila une bonne chose de faite! Tu pourra aussi les ameliorer quand t'aura plus de ressource. Pour l'instant retourne sur la planete et va dans ton inventaire pour equiper ton nouvel outil. C'est aussi ici que tu pourra utiliser tes boosts (enfin, quand t'en aura)";
-				Tutorisation->SetPopup(textTuto, 20.0f, 4);
+				FString textTuto = "Voila une bonne chose de faite! Retourne sur la planete et va dans ton inventaire pour equiper ton nouvel outil. C'est aussi ici que tu pourra utiliser tes boosts (enfin, quand t'en aura)";
+				Tutorisation->SetPopup(textTuto, 15.0f, 4);
 			}
 		}
 		else

@@ -28,6 +28,7 @@ void AShop::BeginPlay()
 	buttonArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyButton_2"))));
 	bonusArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyBonus_1"))));
 	bonusArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyBonus_2"))));
+	bonusArray.Add(Cast<UBuyButton>(created_ui->GetWidgetFromName(TEXT("BuyBonus_3"))));
 
 	for (UBuyButton* button : buttonArray)
 	{

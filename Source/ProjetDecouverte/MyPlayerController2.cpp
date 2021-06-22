@@ -10,6 +10,8 @@
 // Sets default values
 AMyPlayerController2::AMyPlayerController2()
 {
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -243,6 +245,7 @@ void AMyPlayerController2::OnFingerTouch(const ETouchIndex::Type FingerIndex, co
 						{
 							holdSoundComponent->Play();
 							HoldDamage(Cast<ALayerPiece>(HitResult.GetActor()));
+							HoldFX = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), Cast<ALayerPiece>(HitResult.GetActor())->TouchVFX, HitResult.ImpactPoint);
 						}
 					}
 				}
@@ -263,6 +266,12 @@ void AMyPlayerController2::OnFingerRelease(const ETouchIndex::Type FingerIndex, 
 	if (currentTool->onHold && holdSoundComponent != NULL && holdSoundComponent->IsPlaying())
 	{
 		holdSoundComponent->Stop();
+	}
+
+	if (HoldFX != NULL)
+	{
+		HoldFX->DestroyInstance();
+		HoldFX = NULL;
 	}
 
 	ObjectSelected = NULL;

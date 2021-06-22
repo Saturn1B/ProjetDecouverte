@@ -18,6 +18,7 @@
 #include "MyPlayerController2.generated.h"
 
 class UNiagaraSystem;
+class UNiagaraComponent;
 
 UCLASS()
 class PROJETDECOUVERTE_API AMyPlayerController2 : public APawn
@@ -95,6 +96,9 @@ public:
 		bool tuto1 = false;
 
 	UPROPERTY(editanywhere)
+		bool tuto2 = true;
+
+	UPROPERTY(editanywhere)
 		FVector2D currentTouch;
 
 	UPROPERTY(editanywhere)
@@ -119,4 +123,7 @@ public:
 		USoundBase* holdSound;
 	//UPROPERTY(editanywhere, Category = "Sound")
 		UAudioComponent* holdSoundComponent;
+
+		UPROPERTY(editanywhere)
+			UNiagaraComponent* HoldFX;
 };

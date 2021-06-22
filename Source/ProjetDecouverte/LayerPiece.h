@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Tutorisation.h"
+#include "Achievments.h"
 #include "Components/PrimitiveComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "LayerPiece.generated.h"
@@ -75,7 +76,7 @@ public:
 
 	//if lava
 
-	void LavaSpread();
+	void LavaSpread(FVector destroyLoc);
 
 	UPROPERTY(editanywhere)
 		TArray<class ALayerPiece*> spreadPieces;
@@ -124,10 +125,16 @@ public:
 		UNiagaraSystem* DestroyVFX;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UNiagaraSystem* LavaSpreadFX;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class AMyPlayerController2* Player;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		class ATutorisation* Tutorisation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AAchievments* CoreAchieve;
 
 	//sound
 
