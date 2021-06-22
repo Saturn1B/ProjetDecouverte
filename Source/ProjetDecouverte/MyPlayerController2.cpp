@@ -63,6 +63,10 @@ void AMyPlayerController2::BeginPlay()
 	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("Camera")), FoundCameras);
 	Camera = FoundCameras[0];
 
+	TArray<AActor*> FoundAtmos;
+	UGameplayStatics::GetAllActorsWithTag(GetWorld(), FName(TEXT("Atmos")), FoundAtmos);
+	Atmos = FoundAtmos;
+
 	//TArray<AActor*> FoundPlanets;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), APlanet::StaticClass(), Planets);
 	bool sorted = false;
@@ -84,6 +88,16 @@ void AMyPlayerController2::BeginPlay()
 
 	PlanetSelected = 0;
 	ObjectSelected = Planets[PlanetSelected];
+
+	for (AActor* atmos : Atmos)
+	{
+		if(atmos)
+		{
+			atmos->SetActorHiddenInGame(true);
+			atmos->SetActorEnableCollision(false);
+			atmos->SetActorTickEnabled(false);
+		}
+	}
 
 	HidePlanet();
 
@@ -313,6 +327,15 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 			zoomedOut = false;
 			shop->created_ui->SetVisibility(ESlateVisibility::Collapsed);
 			inventory->created_ui->SetVisibility(ESlateVisibility::Visible);
+			for (AActor* atmos : Atmos)
+			{
+				if (atmos)
+				{
+					atmos->SetActorHiddenInGame(true);
+					atmos->SetActorEnableCollision(false);
+					atmos->SetActorTickEnabled(false);
+				}
+			}
 			HidePlanet();
 		}
 	}
@@ -325,6 +348,15 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 			zoomedOut = true;
 			shop->created_ui->SetVisibility(ESlateVisibility::Visible);
 			inventory->created_ui->SetVisibility(ESlateVisibility::Collapsed);
+			for (AActor* atmos : Atmos)
+			{
+				if (atmos)
+				{
+					atmos->SetActorHiddenInGame(false);
+					atmos->SetActorEnableCollision(true);
+					atmos->SetActorTickEnabled(true);
+				}
+			}
 			ShowPlanet();
 		}
 	}

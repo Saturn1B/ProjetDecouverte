@@ -72,6 +72,9 @@ public:
 		class AActor* Camera;
 
 	UPROPERTY(editanywhere)
+		TArray<class AActor*> Atmos;
+
+	UPROPERTY(editanywhere)
 		int PlanetSelected;
 
 	UPROPERTY(editanywhere)
