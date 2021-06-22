@@ -47,6 +47,8 @@ void AAchievmentsTab::BeginPlay()
 
 void AAchievmentsTab::RemoveAchievment(AAchievments* toRemove)
 {
+	created_ui->RemoveFromViewport();
+	created_ui->AddToViewport();
 	currentIndex = toRemove->index;
 
 	achievmentsUI[currentIndex]->SetVisibility(ESlateVisibility::Collapsed);
@@ -65,6 +67,7 @@ void AAchievmentsTab::RemoveAchievment(AAchievments* toRemove)
 
 void AAchievmentsTab::HidePopup()
 {
+
 	achievmentsPopup->SetVisibility(ESlateVisibility::Collapsed);
 	if (currentIndex == 1)
 	{

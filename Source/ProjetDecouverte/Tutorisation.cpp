@@ -72,6 +72,9 @@ void ATutorisation::SetPopup(FString text, float time, int imageIndex)
 
 	UGameplayStatics::PlaySound2D(GetWorld(), achieveSound);
 
+	created_ui->RemoveFromViewport();
+	created_ui->AddToViewport();
+
 	popup->SetVisibility(ESlateVisibility::Visible);
 	popupText->SetText(FText::FromString(text));
 

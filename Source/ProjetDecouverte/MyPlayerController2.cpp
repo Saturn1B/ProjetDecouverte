@@ -325,8 +325,8 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 			Camera->SetActorLocation(FVector(-90, Camera->GetActorLocation().Y, 40));
 			Camera->SetActorRotation(FRotator(-20, 0, 0));
 			zoomedOut = false;
-			shop->created_ui->SetVisibility(ESlateVisibility::Collapsed);
-			inventory->created_ui->SetVisibility(ESlateVisibility::Visible);
+			shop->created_ui->RemoveFromViewport();
+			inventory->created_ui->AddToViewport();
 			for (AActor* atmos : Atmos)
 			{
 				if (atmos)
@@ -346,8 +346,8 @@ void AMyPlayerController2::OnFingerPinch(float AxisValue)
 			Camera->SetActorLocation(FVector(-160, Camera->GetActorLocation().Y, 70));
 			Camera->SetActorRotation(FRotator(-20, 0, 0));
 			zoomedOut = true;
-			shop->created_ui->SetVisibility(ESlateVisibility::Visible);
-			inventory->created_ui->SetVisibility(ESlateVisibility::Collapsed);
+			shop->created_ui->AddToViewport();
+			inventory->created_ui->RemoveFromViewport();
 			for (AActor* atmos : Atmos)
 			{
 				if (atmos)

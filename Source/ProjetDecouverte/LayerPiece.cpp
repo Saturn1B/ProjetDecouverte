@@ -218,6 +218,10 @@ void ALayerPiece::Kill()
 			{
 				piece->Destroy();
 			}
+			else if (piece != NULL && !Cast<ALayerPiece>(piece))
+			{
+				piece->Destroy();
+			}
 		}
 		//FoundChildren.Empty();
 		Destroy();

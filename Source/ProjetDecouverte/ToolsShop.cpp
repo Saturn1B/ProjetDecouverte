@@ -81,13 +81,43 @@ void AToolsShop::ZoomInOut()
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMyPlayerController2::StaticClass(), FoundActors);
 	if (Cast<AMyPlayerController2>(FoundActors[0])->zoomedOut)
 	{
-		camera->SetActorLocation(FVector(camera->GetActorLocation().X, camera->GetActorLocation().Y, camera->GetActorLocation().Z - 100));
+		//camera->SetActorLocation(FVector(camera->GetActorLocation().X, camera->GetActorLocation().Y, camera->GetActorLocation().Z - 100));
+		//Cast<AMyPlayerController2>(FoundActors[0])->zoomedOut = false;
+		Cast<AMyPlayerController2>(FoundActors[0])->Camera->SetActorLocation(FVector(-90, Cast<AMyPlayerController2>(FoundActors[0])->Camera->GetActorLocation().Y, 40));
+		Cast<AMyPlayerController2>(FoundActors[0])->Camera->SetActorRotation(FRotator(-20, 0, 0));
 		Cast<AMyPlayerController2>(FoundActors[0])->zoomedOut = false;
+		Cast<AMyPlayerController2>(FoundActors[0])->shop->created_ui->RemoveFromViewport();
+		Cast<AMyPlayerController2>(FoundActors[0])->inventory->created_ui->AddToViewport();
+		for (AActor* atmos : Cast<AMyPlayerController2>(FoundActors[0])->Atmos)
+		{
+			if (atmos)
+			{
+				atmos->SetActorHiddenInGame(true);
+				atmos->SetActorEnableCollision(false);
+				atmos->SetActorTickEnabled(false);
+			}
+		}
+		Cast<AMyPlayerController2>(FoundActors[0])->HidePlanet();
 	}
 	else
 	{
-		camera->SetActorLocation(FVector(camera->GetActorLocation().X, camera->GetActorLocation().Y, camera->GetActorLocation().Z + 100));
+		//camera->SetActorLocation(FVector(camera->GetActorLocation().X, camera->GetActorLocation().Y, camera->GetActorLocation().Z + 100));
+		//Cast<AMyPlayerController2>(FoundActors[0])->zoomedOut = true;
+		Cast<AMyPlayerController2>(FoundActors[0])->Camera->SetActorLocation(FVector(-160, Cast<AMyPlayerController2>(FoundActors[0])->Camera->GetActorLocation().Y, 70));
+		Cast<AMyPlayerController2>(FoundActors[0])->Camera->SetActorRotation(FRotator(-20, 0, 0));
 		Cast<AMyPlayerController2>(FoundActors[0])->zoomedOut = true;
+		Cast<AMyPlayerController2>(FoundActors[0])->shop->created_ui->AddToViewport();
+		Cast<AMyPlayerController2>(FoundActors[0])->inventory->created_ui->RemoveFromViewport();
+		for (AActor* atmos : Cast<AMyPlayerController2>(FoundActors[0])->Atmos)
+		{
+			if (atmos)
+			{
+				atmos->SetActorHiddenInGame(false);
+				atmos->SetActorEnableCollision(true);
+				atmos->SetActorTickEnabled(true);
+			}
+		}
+		Cast<AMyPlayerController2>(FoundActors[0])->ShowPlanet();
 	}
 }
 

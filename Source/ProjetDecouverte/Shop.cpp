@@ -35,7 +35,7 @@ void AShop::BeginPlay()
 		button->shop = this;
 	}
 
-	//created_ui->SetVisibility(ESlateVisibility::Collapsed);
+	created_ui->RemoveFromViewport();
 
 	shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 
@@ -118,17 +118,17 @@ void AShop::ActiveShop()
 		shopPanel->SetVisibility(ESlateVisibility::Visible);
 		Tutorisation->ResetPopup();
 
-		parametters->paramettersButton->SetVisibility(ESlateVisibility::Hidden);
-		material->matButton->SetVisibility(ESlateVisibility::Hidden);
-		achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Hidden);
+		//parametters->paramettersButton->SetVisibility(ESlateVisibility::Hidden);
+		//material->matButton->SetVisibility(ESlateVisibility::Hidden);
+		//achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Hidden);
 	}
 	else if(shopPanel->GetVisibility() == ESlateVisibility::Visible)
 	{
 		shopPanel->SetVisibility(ESlateVisibility::Collapsed);
 
-		parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
-		material->matButton->SetVisibility(ESlateVisibility::Visible);
-		achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
+		//parametters->paramettersButton->SetVisibility(ESlateVisibility::Visible);
+		//material->matButton->SetVisibility(ESlateVisibility::Visible);
+		//achievmentsTab->achieveButton->SetVisibility(ESlateVisibility::Visible);
 	}
 }
 
