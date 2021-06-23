@@ -72,7 +72,7 @@ void AAchievmentsTab::HidePopup()
 	if (currentIndex == 1)
 	{
 		Tutorisation->ResetPopup();
-		FString text = "Jolie mon petit, t'a le coup de main. Passe sur la carte galactique en dezoomant. La tu pourra, choisir une autre planete, je te conseille de partir vers celle de glace (y a des trucs interessant)";
+		FString text = "Joli ! T'as le coup de main. Passe sur la carte galactique en dezoomant. Et choisi une autre planete pour continuer a piller";
 		Tutorisation->SetPopup(text, 20.0f, 0);
 	}
 }

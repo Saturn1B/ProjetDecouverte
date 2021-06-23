@@ -33,7 +33,7 @@ void UBuyButton::Clicked()
 				Tutorisation = Cast<ATutorisation>(FoundTuto[0]);
 
 				Tutorisation->ResetPopup();
-				FString textTuto = "Voila une bonne chose de faite! Retourne sur la planete et va dans ton inventaire pour equiper ton nouvel outil. C'est aussi ici que tu pourra utiliser tes boosts (enfin, quand t'en aura)";
+				FString textTuto = "Voila une bonne chose de faite! Retourne sur la planete et va dans ton inventaire pour equiper ton nouvel outil. C'est aussi ici que tu pourras utiliser tes boosts.";
 				Tutorisation->SetPopup(textTuto, 15.0f, 4);
 			}
 		}
@@ -93,6 +93,7 @@ void UBuyButton::Clicked()
 			//if (toolIndex == bonus->index)
 			//{
 		isBought = true;
+		bonus->Buy();
 		bonus->SetIsEnabled(true);
 		this->SetIsEnabled(false);
 			//}

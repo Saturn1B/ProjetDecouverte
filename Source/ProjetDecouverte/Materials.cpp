@@ -130,7 +130,7 @@ void AMaterials::MatTab()
 	if (matUse == 2)
 	{
 		Tutorisation->ResetPopup();
-		FString text = "C'est pas beaucoup de ressources! Il te faut peut etre un peu plus de motivation. Va dans l'onglet mission pour en trouver";
+		FString text = "C'est pas beaucoup de ressources! Il te faut peut etre un peu plus de motivation. Va dans l'onglet mission pour en trouver.";
 		Tutorisation->SetPopup(text, 12.0f, 2);
 	}
 

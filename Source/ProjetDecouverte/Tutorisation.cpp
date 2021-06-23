@@ -32,7 +32,7 @@ void ATutorisation::BeginPlay()
 
 	button->OnClicked.AddDynamic(this, &ATutorisation::ResetPopup);
 
-	FString text = "Hey mineur! Bienvenue pour ton premier jour. Le principe est simple, ici on detruit des planetes jusqu'a leur noyau pour en recuperer les ressources. Ne t'inquiete pas tout est legal (enfin, tant que tu te fait pas chopper).";
+	FString text = "Hey pilleur! Bienvenue pour ton premier jour. Le principe est simple, ici on detruit des planetes jusqu'a leur noyau pour en recuperer les ressources. Ne t'inquiete pas tout est legal. Enfin, tant que tu te fait pas chopper.";
 	SetPopup(text, 20.0f, 0);
 }
 

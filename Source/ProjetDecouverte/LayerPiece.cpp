@@ -142,14 +142,14 @@ void ALayerPiece::LooseHP(int damageValue, FVector destroyLoc)
 			{
 				Player->tuto1 = true;
 				Tutorisation->ResetPopup();
-				FString text = "Hey, bien joue mineur! Belle explosion! Tu peux aller dans l'onglet ressource pour voir ce que t'a recolter. Quoique la roche sa raporte pas grand chose";
+				FString text = "Hey, bien joue pilleur! Belle explosion! Va dans l'onglet ressource pour voir ce que t'as recolte.";
 				Tutorisation->SetPopup(text, 15.0f, 1);
 			}
 			else if (Player->tuto1 && !Player->tuto2 && Tutorisation != NULL)
 			{
 				Player->tuto2 = true;
 				Tutorisation->ResetPopup();
-				FString text = "Tiens on dirait qu'il y a de l'eau la dessous, il te faudra peut etre un aute outil pour le degager. Va dans la carte galactique, y a la boutique, tu pourra y trouver de nouveaux outils (et des boosts)";
+				FString text = "Tiens on dirait qu'il y a de l'eau la dessous, il te faut peut etre un autre outil pour l'enlever. Va dans la carte galactique, il y a la boutique, tu pourras y trouver de nouveaux outils.";
 				Tutorisation->SetPopup(text, 15.0f, 0);
 			}
 		}

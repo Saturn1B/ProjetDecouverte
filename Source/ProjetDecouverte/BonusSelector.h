@@ -8,6 +8,7 @@
 #include "BonusSelector.generated.h"
 
 class MyPlayerController2;
+class Materials;
 
 /**
  *
@@ -18,6 +19,9 @@ class PROJETDECOUVERTE_API UBonusSelector : public UButton
 	GENERATED_BODY()
 
 public :
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AMaterials* materials;
 
 	UPROPERTY(editanywhere)
 		int damageBonus;
@@ -39,4 +43,7 @@ public :
 
 	UFUNCTION(BlueprintCallable)
 		void RestoreValue();
+
+	UFUNCTION(BlueprintCallable)
+		void Buy();
 };

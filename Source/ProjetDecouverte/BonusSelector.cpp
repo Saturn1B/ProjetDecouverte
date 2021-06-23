@@ -3,6 +3,7 @@
 
 #include "BonusSelector.h"
 #include "MyPlayerController2.h"
+#include "Materials.h"
 
 void UBonusSelector::Clicked()
 {
@@ -23,4 +24,16 @@ void UBonusSelector::RestoreValue()
 
 	if (damage) { player->damageBonus = 1; }
 	else { player->materialBonus = 1; }
+}
+
+void UBonusSelector::Buy()
+{
+	TArray<AActor*> FoundMat;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AMaterials::StaticClass(), FoundMat);
+	materials = Cast<AMaterials>(FoundMat[0]);
+
+	for (size_t i = 0; i < cost.Num(); i++)
+	{
+		materials->UpdateMaterial(i, -cost[i]);
+	}
 }
